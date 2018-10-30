@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
+<!-- Obtener el ultimo Folio -->
+<?php
+    include_once('info.php');
+    $query = "SELECT folio FROM reportes ORDER BY folio";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $reportes = $statement->fetch();
+    $statement->closeCursor();
+?>
     <!-- Icono -->
     <link rel="icon" type="image/png" href="img/icono.png" />
     <title>Reportes</title>
@@ -10,28 +19,42 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+    div.scrollmenu {
+    background-color:darkgrey;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+    background-color: #777;
+}
+
+    
+    </style>
      </head>
   <body>
-      <!--encabezado-->
-      <div class="pos-f-t">
-        <div class="collapse" id="navbarToggleExternalContent">
-          <div class="bg-dark p-4">
-            <h4 class="text-white">Collapsed content</h4>
-            <span class="text-muted">Toggleable via the navbar brand.</span>
-          </div>
-        </div>
-        <nav class="navbar navbar-dark bg-dark">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </nav>
-      </div>
 
+    <!--encabezado-->
+    <div class="scrollmenu">
+      <a href="reportes.php">REPORTES</a>
+      <a href="modificar.html">MODIFICAR REPORTES</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About</a>
+    </div>
   <div class="jumbotron" style="text-align:center">
     <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="left">
     <!-- Nombres -->
         <h1 class="display-6">SECRETARIA DE DESARROLLO URBANO Y ECOLOGIA</h1>
-        <p class="lead">OFICINA DE INFORMATICA </p>
+        <p class="lead">OFICINA DE INFORMATICA / REPORTES </p>
       </div>
 
       <!-- Contenedor -->
@@ -42,26 +65,26 @@
         <div class="form-group">
          <label for=""></label>
            <input type="text"
-             class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 30%;" disabled>
+             class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 30%;" disabled>
              <br>
-             <button type="button" class="btn btn-outline-primary">GUARDAR</button>
+             <button type="submit" class="btn btn-outline-primary" form="main">GUARDAR</button>
         </div>
       </div>
     <!-- Parte Derecha -->
       <div class="col-md">
-        <form style="text-align:rigth;">
+        <form style="text-align:rigth;" id="main" action="reportese.php" method="post">
           <!-- Formulario -->
-          <div id="main" class="form-group">
+          <div id="main" class="form-group" >
             <label for=""></label>
-            <input type="text" class="form-control" name="ASUNTO DEL REPORTE" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center">
+            <input type="text" class="form-control" name="asunto" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center">
             <small id="helpId" class="form-text text-muted"></small>
             <label for=""></label>
-            <input type="text" class="form-control" name="QUIEN REPORTA" id="" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center">
+            <input type="text" class="form-control" name="usuario" id="" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center">
             <small id="helpId" class="form-text text-muted"></small>
             <label for=""></label>
            <!--Departamenots Desplegables-->
-              <select class="form-control" >
-                <option>ADMINISTRATIVO</option>
+              <select class="form-control" name="departamento">
+                <option >ADMINISTRATIVO</option>
                 <option>COORDINACION Y GESTION CATASTRAL</option>
                 <option>CUAHUTEMOC</option>
                 <option>DELICIAS</option>
@@ -85,7 +108,7 @@
               </select>
               <br>
             <!--Encargados Desplegable -->
-                <select class="form-control">
+                <select class="form-control" name="tecnico">
                   <option>Karla Lira</option>
                   <option>Juan Hernandez</option>
                   <option>Myrna Enriquez</option>
@@ -94,8 +117,9 @@
                 </select>
             <div class="form-group">
               <label for=""></label>
-              <textarea class="form-control" name="DETALLES" id="" rows="5" placeholder="DETALLES" style="text-align:center"></textarea>
-            </div>                        
+              <!-- detalles -->
+              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center"></textarea>
+            </div> 
           </div>
         </form>
       </div>
