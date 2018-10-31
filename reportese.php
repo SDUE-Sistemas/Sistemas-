@@ -1,44 +1,63 @@
 <?php
-function eliminar_tildes($cadena){
+
+function elimina_acentos($text)
+    {
+        $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
+        $text = strtolower($text);
+        $patron = array (
+            // Espacios, puntos y comas por guion
+            //'/[\., ]+/' => ' ',
  
-    //Codificamos la cadena en formato utf8 en caso de que nos de errores
-    $cadena = utf8_encode($cadena);
+            // Vocales
+            '/\+/' => '',
+            '/&agrave;/' => 'a',
+            '/&egrave;/' => 'e',
+            '/&igrave;/' => 'i',
+            '/&ograve;/' => 'o',
+            '/&ugrave;/' => 'u',
  
-    //Ahora reemplazamos las letras
-    $cadena = str_replace(
-        array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'),
-        array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'),
-        $cadena
-    );
+            '/&aacute;/' => 'a',
+            '/&eacute;/' => 'e',
+            '/&iacute;/' => 'i',
+            '/&oacute;/' => 'o',
+            '/&uacute;/' => 'u',
  
-    $cadena = str_replace(
-        array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'),
-        array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'),
-        $cadena );
+            '/&acirc;/' => 'a',
+            '/&ecirc;/' => 'e',
+            '/&icirc;/' => 'i',
+            '/&ocirc;/' => 'o',
+            '/&ucirc;/' => 'u',
  
-    $cadena = str_replace(
-        array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'),
-        array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'),
-        $cadena );
+            '/&atilde;/' => 'a',
+            '/&etilde;/' => 'e',
+            '/&itilde;/' => 'i',
+            '/&otilde;/' => 'o',
+            '/&utilde;/' => 'u',
  
-    $cadena = str_replace(
-        array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'),
-        array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'),
-        $cadena );
+            '/&auml;/' => 'a',
+            '/&euml;/' => 'e',
+            '/&iuml;/' => 'i',
+            '/&ouml;/' => 'o',
+            '/&uuml;/' => 'u',
  
-    $cadena = str_replace(
-        array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'),
-        array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'),
-        $cadena );
+            '/&auml;/' => 'a',
+            '/&euml;/' => 'e',
+            '/&iuml;/' => 'i',
+            '/&ouml;/' => 'o',
+            '/&uuml;/' => 'u',
  
-    $cadena = str_replace(
-        array('ñ', 'Ñ', 'ç', 'Ç'),
-        array('n', 'N', 'c', 'C'),
-        $cadena
-    );
+            // Otras letras y caracteres especiales
+            '/&aring;/' => 'a',
+            '/&ntilde;/' => 'n',
  
-    return $cadena;
-}
+            // Agregar aqui mas caracteres si es necesario
+ 
+        );
+ 
+        $text = preg_replace(array_keys($patron),array_values($patron),$text);
+        return $text;
+    }
+    
 ?>
 <?php
     include_once('info.php');
@@ -53,7 +72,7 @@ function eliminar_tildes($cadena){
     $tecnico = $_POST['tecnico'];
     $estado = 0;
 
-    $detalles=eliminar_tildes($detalles);
+    $detalles=elimina_acentos($detalles);
     echo $detalles;
     $statement->bindValue(':estado', $estado);
     $statement->bindValue(':detalles' , strtoupper($detalles));

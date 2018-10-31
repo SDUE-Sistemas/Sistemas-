@@ -46,7 +46,7 @@ div.scrollmenu a:hover {
     <!--encabezado-->
     <div class="scrollmenu">
       <a href="reportes.php">REPORTES</a>
-      <a href="modificar.php?FOLIO=0">MODIFICAR REPORTES</a>
+      <a href="modificar.php?FOLIO=0>MODIFICAR REPORTES">MODIFICAR REPORTES</a>
       <a href="#contact">Contact</a>
       <a href="#about">About</a>
     </div>
