@@ -1,6 +1,6 @@
 <?php
 function elimina_acentos($text)
-    {
+{
         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
         $text = strtolower($text);
         $patron = array (
@@ -59,23 +59,25 @@ function elimina_acentos($text)
     
 ?>
 <?php
-    include_once('info.php');
-    $query = "INSERT INTO reportes(estado, detalles, asunto, usuario, departamento, tecnico)
-            VALUES(:estado, :detalles, :asunto, :usuario, :departamento, :tecnico)";
+include_once('info.php');
+    $query = "UPDATE reportes
+    SET detalles= :detalles, asunto = :asunto, usuario = :usuario, departamento = :departamento,
+    tecnico = :tecnico WHERE folio LIKE :folio"; 
+
     $statement = $db->prepare($query); 
 
+    $folio = $_GET['folio'];
     $detalles = $_POST['detalles'];
     $asunto = $_POST['asunto'];
     $usuario = $_POST['usuario'];
     $departamento = $_POST['departamento'];
     $tecnico = $_POST['tecnico'];
-    $estado = 0;
 
     $detalles=elimina_acentos($detalles);
     $asunto = elimina_acentos($asunto);
     $usuario = elimina_acentos($usuario);
 
-    $statement->bindValue(':estado', $estado);
+    $statement->bindvalue(':folio', $folio);
     $statement->bindValue(':detalles' , strtoupper($detalles));
     $statement->bindValue(':asunto' , strtoupper($asunto));
     $statement->bindValue(':usuario' , strtoupper($usuario));
@@ -83,8 +85,9 @@ function elimina_acentos($text)
     $statement->bindValue(':tecnico' , $tecnico);
     $statement->execute();
     $statement->closeCursor();
+    echo "CHI CHEÑOL";
 
-?>
-<?php
-header('Location: reportes.php');
-?>
+    header('Location: modificar.php?folio=0');
+    ?>
+
+

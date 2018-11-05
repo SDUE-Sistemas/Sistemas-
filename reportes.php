@@ -1,10 +1,11 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <!-- Obtener el ultimo Folio -->
 <?php
     include_once('info.php');
-    $query = "SELECT folio FROM reportes ORDER BY folio";
+    $query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
     $statement = $db->prepare($query);
     $statement->execute();
     $reportes = $statement->fetch();
@@ -46,14 +47,15 @@ div.scrollmenu a:hover {
     <!--encabezado-->
     <div class="scrollmenu">
       <a href="reportes.php">REPORTES</a>
-      <a href="modificar.php?FOLIO=0>MODIFICAR REPORTES">MODIFICAR REPORTES</a>
+      <a href="modificar.php?folio=0">MODIFICAR REPORTES</a>
       <a href="#contact">Contact</a>
       <a href="#about">About</a>
     </div>
   <div class="jumbotron" style="text-align:center">
-    <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="left">
+  <!-- imagen del lado derecho -->
+    <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
     <!-- Nombres -->
-        <h1 class="display-6">SECRETARIA DE DESARROLLO URBANO Y ECOLOGIA</h1>
+        <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
         <p class="lead">OFICINA DE INFORMATICA / REPORTES </p>
       </div>
 
@@ -65,11 +67,27 @@ div.scrollmenu a:hover {
         <div class="form-group">
          <label for=""></label>
            <input type="text"
-             class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 30%;" disabled>
+             class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 100%;" disabled>
              <br>
-             <button type="submit" class="btn btn-outline-primary" form="main">GUARDAR</button>
+             <div class="row">
+             <div class="col-md">
+             <input type="text" class="form-control" name="e1" placeholder="ETIQUETA 1" style="text-align:center; width: 100%;">
+             <br>
+             <input type="text" class="form-control" name="e3" placeholder="ETIQUETA 3" style="text-align:center; width: 100%;">
+             </div>
+             <div class="col-md">
+             <input type="text" class="form-control" name="e2" placeholder="ETIQUETA 2" style="text-align:center; width: 100%;">
+             <br>
+             <input type="text" class="form-control" name="e4" placeholder="ETIQUETA 4" style="text-align:center; width: 100%;">
+             </div>
+             </div>
+             <br>
+             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 210px;" form="main">GUARDAR</button>
         </div>
       </div>
+
+
+
     <!-- Parte Derecha -->
       <div class="col-md">
         <form style="text-align:rigth;" id="main" action="reportese.php" method="post">
@@ -109,11 +127,11 @@ div.scrollmenu a:hover {
               <br>
             <!--Encargados Desplegable -->
                 <select class="form-control" name="tecnico">
-                  <option>Karla Lira</option>
-                  <option>Juan Hernandez</option>
-                  <option>Myrna Enriquez</option>
-                  <option>Omar Herrera</option>
-                  <option>Otros</option>
+                  <option>KARLA LIRA</option>
+                  <option>JUAN HERNANDEZ</option>
+                  <option>MYRNA ENRIQUEZ</option>
+                  <option>OMAR HERRERA</option>
+                  <option>OTROS</option>
                 </select>
             <div class="form-group">
               <label for=""></label>
