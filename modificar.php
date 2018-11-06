@@ -70,9 +70,22 @@ div.scrollmenu a:hover {
          <label for=""></label>
            <input type="text"
              class="form-control" name="folio" value= "<?php echo $reporte['folio']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 30%;" disabled>
-             <br>
              
-             <button type="submit" class="btn btn-outline-primary"  form="main">GUARDAR</button>
+             <br>
+             <div class="row">
+             <div class="col-md">
+             <input type="text" class="form-control" name="e1" placeholder="ETIQUETA 1" style="text-align:center; width: 100%;">
+             <br>
+             <input type="text" class="form-control" name="e3" placeholder="ETIQUETA 3" style="text-align:center; width: 100%;">
+             </div>
+             <div class="col-md">
+             <input type="text" class="form-control" name="e2" placeholder="ETIQUETA 2" style="text-align:center; width: 100%;">
+             <br>
+             <input type="text" class="form-control" name="e4" placeholder="ETIQUETA 4" style="text-align:center; width: 100%;">
+             </div>
+             </div>
+             <br>
+             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 210px;" form="main">GUARDAR</button>
         </div>
       </div>
     <!-- Parte Derecha -->
