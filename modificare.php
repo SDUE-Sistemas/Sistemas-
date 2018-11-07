@@ -62,7 +62,7 @@ function elimina_acentos($text)
 include_once('info.php');
     $query = "UPDATE reportes
     SET detalles= :detalles, asunto = :asunto, usuario = :usuario, departamento = :departamento,
-    tecnico = :tecnico WHERE folio LIKE :folio"; 
+    tecnico = :tecnico, e1 = :e1, e2 = :e2, e3 = :e3, e4 = :e4 WHERE folio LIKE :folio"; 
 
     $statement = $db->prepare($query); 
 
@@ -72,11 +72,19 @@ include_once('info.php');
     $usuario = $_POST['usuario'];
     $departamento = $_POST['departamento'];
     $tecnico = $_POST['tecnico'];
+    $e1 = $_POST['e1'];
+    $e2 = $_POST['e2'];
+    $e3 = $_POST['e3'];
+    $e4 = $_POST['e4'];
 
     $detalles=elimina_acentos($detalles);
     $asunto = elimina_acentos($asunto);
     $usuario = elimina_acentos($usuario);
 
+    $statement->bindValue(':e1', $e1);
+    $statement->bindValue(':e2', $e2);
+    $statement->bindValue(':e3', $e3);
+    $statement->bindValue(':e4', $e4);
     $statement->bindvalue(':folio', $folio);
     $statement->bindValue(':detalles' , strtoupper($detalles));
     $statement->bindValue(':asunto' , strtoupper($asunto));
@@ -85,7 +93,6 @@ include_once('info.php');
     $statement->bindValue(':tecnico' , $tecnico);
     $statement->execute();
     $statement->closeCursor();
-    echo "CHI CHEÑOL";
 
     header('Location: modificar.php?folio=0');
     ?>

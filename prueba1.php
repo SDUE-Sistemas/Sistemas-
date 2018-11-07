@@ -2,8 +2,8 @@
 if (isset($_POST['usuario']) && isset($_POST['password'])){
 $usuario = $_POST['usuario'];
 $password = $_POST['password'];
-setcookie('usuario', $usuario, time()+5);
-setcookie('password', $password, time()+5);
+setcookie('usuario', $usuario, time()+60);
+setcookie('password', $password, time()+60);
 }else {
     header('Location: reportes.php');
 }

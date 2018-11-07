@@ -49,8 +49,8 @@ div.scrollmenu a:hover {
     <!--encabezado-->
     <div class="scrollmenu">
       <a href="reportes.php">REPORTES</a>
-      <a href="modificar.php?folio=0">MODIFICAR REPORTES</a>
-      <a href="#contact">Contact</a>
+      <a href="modificar.php">MODIFICAR REPORTES</a>
+      <a href="mostrando.php">MOSTRAR</a>
       <a href="#about">About</a>
     </div>
   <div class="jumbotron" style="text-align:center">
@@ -73,14 +73,14 @@ div.scrollmenu a:hover {
              <br>
              <div class="row">
              <div class="col-md">
-             <input type="text" class="form-control" name="e1" placeholder="ETIQUETA 1" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e1" form="main" placeholder="ETIQUETA 1" style="text-align:center; width: 100%;">
              <br>
-             <input type="text" class="form-control" name="e3" placeholder="ETIQUETA 3" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e3" form="main" placeholder="ETIQUETA 3" style="text-align:center; width: 100%;">
              </div>
              <div class="col-md">
-             <input type="text" class="form-control" name="e2" placeholder="ETIQUETA 2" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e2" form="main" placeholder="ETIQUETA 2" style="text-align:center; width: 100%;">
              <br>
-             <input type="text" class="form-control" name="e4" placeholder="ETIQUETA 4" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e4" form="main" placeholder="ETIQUETA 4" style="text-align:center; width: 100%;">
              </div>
              </div>
              <br>

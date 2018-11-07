@@ -19,10 +19,11 @@ $reporte = $statement->fetch();
 $statement->closeCursor();
 }
 else{
-  header('Location: modificar.php');
+  header('Location: mostrando.php');
 }
 ?>
 
+<!-- Encontrado -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -78,26 +79,34 @@ div.scrollmenu a:hover {
   <div class="row">
        <!-- Parte Izquierda xd-->
       <div class="col-md">
-        <div class="form-group" >
-         <label for=""></label>
+        <div class="form-group">
+         <div class="row">
+         <div class="col-md">
+         <label for="">FOLIO</label>
            <input type="text"
-             class="form-control" form="main" name="folio" value= "<?php echo $reporte['folio']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 30%;" disabled>
-             
+             class="form-control" name="folio" value= "<?php echo $reporte['folio']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled>
              <br>
+             <label for="" text-align:center;>FECHA</label>
+             <input type="text"
+             class="form-control" name="folio" value= "<?php echo $reporte['fecha']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled> 
+         </div>
+         </div>
+             <br>
+            <label>ETIQUETAS</label>
              <div class="row">
              <div class="col-md">
-             <input type="text" form="main" class="form-control" value="<?php echo $reporte['e1']; ?>" name="e1" placeholder="ETIQUETA 1" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e1" placeholder="ETIQUETA 1" value="<?php echo $reporte['e1'] ?>" style="text-align:center; width: 100%;" disabled>
              <br>
-             <input type="text" form="main" class="form-control" value="<?php echo $reporte['e3']; ?>" name="e3" placeholder="ETIQUETA 3" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e3" placeholder="ETIQUETA 3" value="<?php echo $reporte['e3']; ?>"style="text-align:center; width: 100%;" disabled>
              </div>
              <div class="col-md">
-             <input type="text" form="main" class="form-control" value="<?php echo $reporte['e2']; ?>" name="e2" placeholder="ETIQUETA 2" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e2" placeholder="ETIQUETA 2" value="<?php echo $reporte['e2']; ?>"style="text-align:center; width: 100%;" disabled>
              <br>
-             <input type="text" form="main" class="form-control" value="<?php echo $reporte['e4']; ?>" name="e4" placeholder="ETIQUETA 4" style="text-align:center; width: 100%;">
+             <input type="text" class="form-control" name="e4" placeholder="ETIQUETA 4" value="<?php echo $reporte['e4']; ?>"style="text-align:center; width: 100%;" disabled>
              </div>
              </div>
              <br>
-             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 210px;" form="main">GUARDAR</button>
+            
         </div>
       </div>
     <!-- Parte Derecha -->
@@ -106,51 +115,24 @@ div.scrollmenu a:hover {
         <form style="text-align:rigth;" method="post" action="modificare.php?folio=<?php echo $reporte['folio']; ?>" id="main">
           
           <div id="main" class="form-group">
-            <label for=""></label>
-            <input type="text" class="form-control" name="asunto" value= "<?php echo $reporte['asunto']; ?>" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center">
+            <label for="">ASUNTO</label>
+            <input type="text" class="form-control" name="asunto" value= "<?php echo $reporte['asunto']; ?>" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center" disabled>
             <small id="helpId" class="form-text text-muted"></small>
-            <label for=""></label>
-            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['usuario']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center">
+            <label for="">USUARIO</label>
+            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['usuario']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
             <small id="helpId" class="form-text text-muted"></small>
-            <label for=""></label>
+            <label for="">DEPARTAMENTO</label>
            <!--Departamenots Desplegables-->
-              <select class="form-control" name="departamento">
-              <option selected><?php echo $reporte['departamento'];?></option>
-                <option>ADMINISTRATIVO</option>
-                <option>COORDINACION Y GESTION CATASTRAL</option>
-                <option>CUAHUTEMOC</option>
-                <option>DELICIAS</option>
-                <option>DESPACHO S.D.U.E</option>
-                <option>DIR. CATASTRO</option>
-                <option>DIR. DESARROLLO URBANO</option>
-                <option>DIR. ECOLOGIA</option>
-                <option>FORESTACION Y REFORESTACION</option>
-                <option>INFORM. GEOGRAFICA Y CART. URBANA</option>
-                <option>JUAREZ</option>
-                <option>JURIDICO</option>
-                <option>MOVILIDAD URBANA</option>
-                <option>NVO. CASAS GRANDES</option>
-                <option>ORD. ECOLOGICO E IMPAC. AMB.</option>
-                <option>PARRAL</option>
-                <option>PLANEACION</option>
-                <option>PREVENCION Y CONTROL CONTAM.</option>
-                <option>PROYECTOS ESPECIALES</option>
-                <option>REGULARIZACION</option>
-                <option>VIDA SILVESTRE</option>
-
-              </select>
+           <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
+              
               <br>
             <!--Encargados Desplegable -->
-                <select class="form-control" name="tecnico" >
-                  <option  <?php if($reporte['tecnico']=='KARLA LIRA'){echo 'selected';}?> >KARLA LIRA</option>
-                  <option  <?php if($reporte['tecnico']=='JUAN HERNANDEZ'){echo 'selected';}?> >JUAN HERNANDEZ</option>
-                  <option  <?php if($reporte['tecnico']=='MYRNA ENRIQUEZ'){echo 'selected';}?> >MYRNA ENRIQUEZ</option>
-                  <option  <?php if($reporte['tecnico']=='OMAR HERRERA'){echo 'selected';}?> >OMAR HERRERA</option>
-                  <option  <?php if($reporte['tecnico']=='OTROS'){echo 'selected';}?> >OTROS</option>
-                </select>
+            <label>TECNICO</label>
+            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
+
             <div class="form-group">
-              <label for=""></label>
-              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center"><?php echo $reporte['detalles']; ?></textarea>
+            <label for="">DETALLES</label>
+              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center" disabled><?php echo $reporte['detalles']; ?> </textarea>
             </div>                        
           </div>
         </form>
@@ -164,8 +146,10 @@ div.scrollmenu a:hover {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
   </body>
-</html>
+
+<!-- No encontrado -->
 <?php else: ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -209,36 +193,27 @@ div.scrollmenu a:hover {
       <a href="#about">About</a>
     </div>
   <div class="jumbotron" style="text-align:center">
-  <!-- imagen del lado derecho -->
-  <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
+    <!-- imagen del lado derecho -->
+    <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
     <!-- Nombres -->
-        <h1 class="display-6">SEC RETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
+        <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
         <p class="lead">OFICINA DE INFORMATICA / REPORTES </p>
       </div>
 
-      <!-- Contenedor -->
 <div class="container">
-  <div class="row">
-       <!-- Parte Izquierda xd-->
-      <div class="col-md">
-        <div class="form-group">
-         <form action="modificar.php" method="post">
+<div class="form-group">
+         <form action="mostrando.php" method="post">
            <input type="text"class="form-control" name="folio" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 30%;">
              <br>
              <button type="submit" class="btn btn-outline-primary">Buscar</button>
          </form>
-            </div>
-      </div>
-    <!-- Parte Derecha -->
-      
-    </div>
-</div>
-<!-- Librerias No Mover >:V -->
+         </div>
+    <!-- Librerias No Mover >:V -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+    <script src="js/bootstrap.min.js"></script>    
+</body>
 </html>
 <?php endif; ?>

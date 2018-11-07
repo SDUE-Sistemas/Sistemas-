@@ -60,8 +60,8 @@ function elimina_acentos($text)
 ?>
 <?php
     include_once('info.php');
-    $query = "INSERT INTO reportes(estado, detalles, asunto, usuario, departamento, tecnico)
-            VALUES(:estado, :detalles, :asunto, :usuario, :departamento, :tecnico)";
+    $query = "INSERT INTO reportes(estado, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4)
+            VALUES(:estado, :detalles, :asunto, :usuario, :departamento, :tecnico, :e1, :e2, :e3, :e4)";
     $statement = $db->prepare($query); 
 
     $detalles = $_POST['detalles'];
@@ -69,12 +69,20 @@ function elimina_acentos($text)
     $usuario = $_POST['usuario'];
     $departamento = $_POST['departamento'];
     $tecnico = $_POST['tecnico'];
+    $e1 = $_POST['e1'];
+    $e2 = $_POST['e2'];
+    $e3 = $_POST['e3'];
+    $e4 = $_POST['e4'];
     $estado = 0;
 
     $detalles=elimina_acentos($detalles);
     $asunto = elimina_acentos($asunto);
     $usuario = elimina_acentos($usuario);
 
+    $statement->bindValue(':e1', $e1);
+    $statement->bindValue(':e2', $e2);
+    $statement->bindValue(':e3', $e3);
+    $statement->bindValue(':e4', $e4);
     $statement->bindValue(':estado', $estado);
     $statement->bindValue(':detalles' , strtoupper($detalles));
     $statement->bindValue(':asunto' , strtoupper($asunto));
