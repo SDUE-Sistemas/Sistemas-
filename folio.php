@@ -1,26 +1,17 @@
-<?php if (isset($_POST['folio'])):?>
 <?php
-include_once('info.php');
-
-$query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
+    include_once('info.php');
+    $query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
     $statement = $db->prepare($query);
     $statement->execute();
     $x = $statement->fetch();
     $statement->closeCursor();
 
-$folio = $_POST['folio'];
-
-if($folio < ($x['folio']+1) && $folio > 0){
-
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folio";
+$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio=$x[folio]";
 $statement = $db->prepare($query);
 $statement->execute();
 $reporte = $statement->fetch();
 $statement->closeCursor();
-}
-else{
-  header('Location: mostrando.php');
-}
+
 ?>
 
 <!-- Encontrado -->
@@ -168,9 +159,14 @@ else{
               <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center" disabled><?php echo $reporte['detalles']; ?> </textarea>
             </div>                        
           </div>
-        </form>
+        
       </div>
     </div>
+    </form>
+        <form action="reportes.php" method="post">  
+        <button type="submit" class="btn btn-secondary" style="width: 100%; height: 210px;">OK</button>
+
+        </form> 
 </div>
 <!-- Librerias No Mover >:V -->
     <!-- Optional JavaScript -->
@@ -179,106 +175,4 @@ else{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
   </body>
-
-<!-- No encontrado -->
-<?php else: ?>
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Icono -->
-    <link rel="icon" type="image/png" href="img/icono.png" />
-    <title>Modificar</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-    div.scrollmenu {
-    background-color:darkgrey;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-div.scrollmenu a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-}
-
-div.scrollmenu a:hover {
-    background-color:white;
-}
-
-	ul, ol {
-				list-style:none;
-			}
-			
-			.nav li a {
-				display:block;
-        background-color:darkgrey;
-			}
-			
-			
-			.nav li ul {
-				display:none;
-				position:absolute;
-
-			}
-			
-			.nav li:hover > ul {
-				display:block;
-      
-			}
-
-    
-    </style>
-     </head>
-  <body>
-
-    <!--encabezado-->
-    
-    <div class="scrollmenu">
-    <ul class="nav">
-      <a href="reportes.php">REPORTES</a>
-      <a href="modificar.php">MODIFICAR REPORTES</a>
-      
-      <li><a>BUSCAR</a>
-      <ul>
-						<li><a href="mostrando.php">POR FOLIO</a></li>
-						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
-						<li><a href="">POR TECNICO</a></li>
-            <li><a href="">POR AREA</a></li>            
-            </ul>
-            </li>
-     
-    </div>
-  <div class="jumbotron" style="text-align:center">
-    <!-- imagen del lado derecho -->
-    <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
-    <!-- Nombres -->
-        <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
-        <p class="lead">OFICINA DE INFORMATICA / BUSCAR </p>
-      </div>
-
-<div class="container">
-<div class="form-group">
-         <form action="mostrando.php" method="post">
-           <input type="text"class="form-control" name="folio" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 30%;">
-             <br>
-             <button type="submit" class="btn btn-outline-primary">Buscar</button>
-         </form>
-         </div>
-    <!-- Librerias No Mover >:V -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>    
-</body>
 </html>
-<?php endif; ?>

@@ -1,29 +1,22 @@
-<?php if (isset($_POST['folio'])):?>
+<?php if (isset($_POST['usuario'])):?>
+<!-- si lo encuentra -->
+
 <?php
+$usuario=strtoupper($_POST['usuario']);
 include_once('info.php');
-
-$query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $x = $statement->fetch();
-    $statement->closeCursor();
-
-$folio = $_POST['folio'];
-
-if($folio < ($x['folio']+1) && $folio > 0){
-
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folio";
+$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE usuario='".$usuario."'";
 $statement = $db->prepare($query);
 $statement->execute();
-$reporte = $statement->fetch();
+$reportes = $statement->fetchAll();
 $statement->closeCursor();
-}
-else{
-  header('Location: mostrando.php');
-}
-?>
 
-<!-- Encontrado -->
+if(empty($reportes)){
+
+  header('Location: mostrande.php');
+
+}
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -35,8 +28,8 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
  
-       <!-- Bootstrap CSS -->
-       <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
     div.scrollmenu {
     background-color:darkgrey;
@@ -82,9 +75,9 @@ else{
      </head>
   <body>
 
-    <!--encabezado-->
+   <!--encabezado-->
     
-    <div class="scrollmenu">
+   <div class="scrollmenu">
     <ul class="nav">
       <a href="reportes.php">REPORTES</a>
       <a href="modificar.php">MODIFICAR REPORTES</a>
@@ -93,10 +86,11 @@ else{
       <ul>
 						<li><a href="mostrando.php">POR FOLIO</a></li>
 						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
-						<li><a href="">POR TECNICO</a></li>
-            <li><a href="">POR AREA</a></li>            
+						<li><a href="mostrandi.php">POR TECNICO</a></li>
+                        <li><a href="mostranda.php">POR AREA</a></li>            
             </ul>
             </li>
+     
     </div>
 
   <div class="jumbotron" style="text-align:center">
@@ -104,11 +98,13 @@ else{
     <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
     <!-- Nombres -->
         <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
-        <p class="lead">OFICINA DE INFORMATICA / BUSCAR </p>
+        <p class="lead">OFICINA DE INFORMATICA / BUSCAR</p>
       </div>
 
       <!-- Contenedor -->
+      <?php foreach($reportes as $reporte): ?>
 <div class="container">
+<hr> 
   <div class="row">
        <!-- Parte Izquierda xd-->
       <div class="col-md">
@@ -145,6 +141,8 @@ else{
     <!-- Parte Derecha -->
       <div class="col-md">
       <!-- Formulario -->
+     
+
         <form style="text-align:rigth;" method="post" action="modificare.php?folio=<?php echo $reporte['folio']; ?>" id="main">
           
           <div id="main" class="form-group">
@@ -166,10 +164,14 @@ else{
             <div class="form-group">
             <label for="">DETALLES</label>
               <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center" disabled><?php echo $reporte['detalles']; ?> </textarea>
-            </div>                        
+            </div>   
+                              
           </div>
         </form>
+        
       </div>
+    
+      <?php endforeach; ?>
     </div>
 </div>
 <!-- Librerias No Mover >:V -->
@@ -179,10 +181,10 @@ else{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
   </body>
+</html>
 
-<!-- No encontrado -->
 <?php else: ?>
-
+<!-- si no lo encuentra -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -251,12 +253,13 @@ div.scrollmenu a:hover {
       <ul>
 						<li><a href="mostrando.php">POR FOLIO</a></li>
 						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
-						<li><a href="">POR TECNICO</a></li>
-            <li><a href="">POR AREA</a></li>            
+						<li><a href="mostrandi.php">POR TECNICO</a></li>
+                        <li><a href="mostranda.php">POR AREA</a></li>            
             </ul>
             </li>
      
     </div>
+
   <div class="jumbotron" style="text-align:center">
     <!-- imagen del lado derecho -->
     <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
@@ -267,8 +270,8 @@ div.scrollmenu a:hover {
 
 <div class="container">
 <div class="form-group">
-         <form action="mostrando.php" method="post">
-           <input type="text"class="form-control" name="folio" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 30%;">
+         <form action="mostrande.php" method="post">
+           <input type="text"class="form-control" name="usuario" id="" aria-describedby="helpId" placeholder="USUARIO" style="text-align:center; width: 30%;">
              <br>
              <button type="submit" class="btn btn-outline-primary">Buscar</button>
          </form>

@@ -94,5 +94,12 @@ function elimina_acentos($text)
 
 ?>
 <?php
-header('Location: reportes.php');
+ include_once('info.php');
+ $query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
+ $statement = $db->prepare($query);
+ $statement->execute();
+ $folio = $statement->fetch();
+ $statement->closeCursor();
+
+header('Location: folio.php');
 ?>

@@ -32,9 +32,9 @@ else{
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+ 
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
     div.scrollmenu {
     background-color:darkgrey;
@@ -51,26 +51,59 @@ div.scrollmenu a {
 }
 
 div.scrollmenu a:hover {
-    background-color: #777;
+    background-color:white;
 }
+
+	ul, ol {
+				list-style:none;
+			}
+			
+			.nav li a {
+				display:block;
+        background-color:darkgrey;
+			}
+			
+			
+			.nav li ul {
+				display:none;
+				position:absolute;
+
+			}
+			
+			.nav li:hover > ul {
+				display:block;
+      
+			}
 
     
     </style>
      </head>
   <body>
+
     <!--encabezado-->
+    
     <div class="scrollmenu">
+    <ul class="nav">
       <a href="reportes.php">REPORTES</a>
       <a href="modificar.php">MODIFICAR REPORTES</a>
-      <a href="mostrando.php">MOSTRAR</a>
-      <a href="#about">About</a>
+      
+      <li><a>BUSCAR</a>
+      <ul>
+						<li><a href="mostrando.php">POR FOLIO</a></li>
+						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
+						<li><a href="">POR TECNICO</a></li>
+            <li><a href="">POR AREA</a></li>          
+            </ul>
+            </li>
+     
     </div>
+    
   <div class="jumbotron" style="text-align:center">
     <!-- imagen del lado derecho -->
     <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
     <!-- Nombres -->
         <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
-        <p class="lead">OFICINA DE INFORMATICA / REPORTES </p>
+        <p class="lead">OFICINA DE INFORMATICA / MODIFICAR </p>
       </div>
 
       <!-- Contenedor -->
@@ -176,8 +209,8 @@ div.scrollmenu a:hover {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
     div.scrollmenu {
     background-color:darkgrey;
@@ -194,26 +227,59 @@ div.scrollmenu a {
 }
 
 div.scrollmenu a:hover {
-    background-color: #777;
+    background-color:white;
 }
+
+	ul, ol {
+				list-style:none;
+			}
+			
+			.nav li a {
+				display:block;
+        background-color:darkgrey;
+			}
+			
+			
+			.nav li ul {
+				display:none;
+				position:absolute;
+
+			}
+			
+			.nav li:hover > ul {
+				display:block;
+      
+			}
 
     
     </style>
      </head>
   <body>
+
     <!--encabezado-->
+    
     <div class="scrollmenu">
+    <ul class="nav">
       <a href="reportes.php">REPORTES</a>
       <a href="modificar.php">MODIFICAR REPORTES</a>
-      <a href="mostrando.php">MOSTRAR</a>
-      <a href="#about">About</a>
+      
+      <li><a>BUSCAR</a>
+      <ul>
+						<li><a href="mostrando.php">POR FOLIO</a></li>
+						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
+						<li><a href="">POR TECNICO</a></li>
+            <li><a href="">POR AREA</a></li>          
+            </ul>
+            </li>
+     
     </div>
+
   <div class="jumbotron" style="text-align:center">
   <!-- imagen del lado derecho -->
   <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
     <!-- Nombres -->
         <h1 class="display-6">SEC RETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
-        <p class="lead">OFICINA DE INFORMATICA / REPORTES </p>
+        <p class="lead">OFICINA DE INFORMATICA / MODIFICAR </p>
       </div>
 
       <!-- Contenedor -->
