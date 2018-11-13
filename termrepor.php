@@ -13,25 +13,28 @@ else{
 if(!($usuario['pass']==$_COOKIE['password'])){
   header('Location: reportes.php');
 }
-?>
 
-<?php
-    include_once('info.php');
-    $query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $x = $statement->fetch();
-    $statement->closeCursor();
-
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio=$x[folio]";
+ if($_COOKIE['usuario'] == "KARLA"){
+   $user='KARLA LIRA';
+ }elseif($_COOKIE['usuario'] == "JUAN"){
+   $user='JUAN HERNANDEZ';
+ }elseif($_COOKIE['usuario'] == "MYRNA"){
+  $user='MYRNA ENRIQUEZ';
+}elseif($_COOKIE['usuario'] == "OMAR"){
+  $user='OMAR HERRERA';
+}elseif($_COOKIE['usuario'] == "OTROS"){
+  $user='OTROS';
+}
+include_once('info.php');
+$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE tecnico='".$user."' AND estado = 0";
 $statement = $db->prepare($query);
 $statement->execute();
-$reporte = $statement->fetch();
+$reportes = $statement->fetchAll();
 $statement->closeCursor();
 
 ?>
 
-<!-- Encontrado -->
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -41,28 +44,27 @@ $statement->closeCursor();
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
  
-       <!-- Bootstrap CSS -->
-       <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
     div.scrollmenu {
     background-color:darkgrey;
     overflow: auto;
     white-space: nowrap;
-    }
+}
 
-    div.scrollmenu a {
+div.scrollmenu a {
     display: inline-block;
     color: black;
     text-align: center;
     padding: 14px;
     text-decoration: none;
-    }
+}
 
-    div.scrollmenu a:hover {
+div.scrollmenu a:hover {
     background-color:white;
-    }
+}
 
 	ul, ol {
 				list-style:none;
@@ -108,17 +110,20 @@ $statement->closeCursor();
         <a href="termrepor.php">TERMINAR MIS REPORTES</a>
       </ul>
     </div>
-
+    
   <div class="jumbotron" style="text-align:center">
     <!-- imagen del lado derecho -->
     <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
     <!-- Nombres -->
         <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
-        <p class="lead">OFICINA DE INFORMATICA / BUSCAR </p>
+        <p class="lead">OFICINA DE INFORMATICA / MODIFICAR </p>
       </div>
-
-      <!-- Contenedor -->
+      
+<!-- Contenedor -->
+<?php if(!empty($reportes)){ ?>
+<?php foreach($reportes as $reporte): ?>
 <div class="container">
+<hr> 
   <div class="row">
        <!-- Parte Izquierda xd-->
       <div class="col-md">
@@ -151,14 +156,12 @@ $statement->closeCursor();
              <br>
             
         </div>
-        <form action="generarpdf.php" method="post">
-          <input type="text" value="<?php echo $reporte['folio']; ?>" name="folio" hidden>
-          <button type="submit" class="btn btn-secondary" style="width: 600px; height: 120px;">PDF</button>
-          </form>
       </div>
     <!-- Parte Derecha -->
       <div class="col-md">
       <!-- Formulario -->
+     
+
         <form style="text-align:rigth;" method="post" action="modificare.php?folio=<?php echo $reporte['folio']; ?>" id="main">
           
           <div id="main" class="form-group">
@@ -180,16 +183,19 @@ $statement->closeCursor();
             <div class="form-group">
             <label for="">DETALLES</label>
               <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center" disabled><?php echo $reporte['detalles']; ?> </textarea>
-            </div>                        
+            </div>   
+                              
           </div>
+        </form>
+        
       </div>
+    
+      <?php endforeach; ?>
     </div>
-    </form>
-        <form action="reportes.php" method="post">  
-        <button type="submit" class="btn btn-secondary" style="width: 100%; height: 210px;">OK</button>
-
-        </form> 
 </div>
+    <?php }else{ ?>
+    <h1>NO TIENE REPORTES SIN TERMINAR</h1>
+    <?PHP } ?>
 <!-- Librerias No Mover >:V -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

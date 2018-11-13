@@ -1,6 +1,7 @@
+
 <?php
-function elimina_acentos($text)
-{
+    function elimina_acentos($text)
+    {
         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
         $text = strtolower($text);
         $patron = array (
@@ -59,7 +60,7 @@ function elimina_acentos($text)
     
 ?>
 <?php
-include_once('info.php');
+    include_once('info.php');
     $query = "UPDATE reportes
     SET detalles= :detalles, asunto = :asunto, usuario = :usuario, departamento = :departamento,
     tecnico = :tecnico, e1 = :e1, e2 = :e2, e3 = :e3, e4 = :e4 WHERE folio LIKE :folio"; 
@@ -95,6 +96,4 @@ include_once('info.php');
     $statement->closeCursor();
 
     header('Location: modificar.php?folio=0');
-    ?>
-
-
+?>

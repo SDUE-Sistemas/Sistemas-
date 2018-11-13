@@ -1,3 +1,20 @@
+<?php if(isset($_COOKIE['usuario']) && isset($_COOKIE['password'])){
+  
+  include_once('info.php');
+  $query = "SELECT pass FROM tecnicos WHERE tecnico='".$_COOKIE['usuario']."'";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $usuario = $statement->fetch();
+  $statement->closeCursor();
+  }
+else{
+  header('Location: reportes.php');
+}
+if(!($usuario['pass']==$_COOKIE['password'])){
+  header('Location: reportes.php');
+}
+?>
+
 <?php if (isset($_POST['tecnico'])):?>
 <!-- si lo encuentra -->
 
@@ -78,19 +95,21 @@ if(empty($reportes)){
     <!--encabezado-->
     
     <div class="scrollmenu">
-    <ul class="nav">
-      <a href="reportes.php">REPORTES</a>
-      <a href="modificar.php">MODIFICAR REPORTES</a>
+      <ul class="nav">
+        <a href="reportes.php">REPORTES</a>
+        <a href="modificar.php">MODIFICAR REPORTES</a>
       
-      <li><a>BUSCAR</a>
-      <ul>
+        <li><a>BUSCAR</a>
+          <ul>
 						<li><a href="mostrando.php">POR FOLIO</a></li>
 						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
 						<li><a href="mostrandi.php">POR TECNICO</a></li>
-                        <li><a href="mostranda.php">POR AREA</a></li>            
-            </ul>
-            </li>
-     
+            <li><a href="mostranda.php">POR AREA</a></li>          
+          </ul>
+        </li>
+        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
+        <a href="logout.php">CERRAR SESION</a>
+      </ul>
     </div>
 
   <div class="jumbotron" style="text-align:center">
@@ -245,19 +264,21 @@ div.scrollmenu a:hover {
     <!--encabezado-->
     
     <div class="scrollmenu">
-    <ul class="nav">
-      <a href="reportes.php">REPORTES</a>
-      <a href="modificar.php">MODIFICAR REPORTES</a>
+      <ul class="nav">
+        <a href="reportes.php">REPORTES</a>
+        <a href="modificar.php">MODIFICAR REPORTES</a>
       
-      <li><a>BUSCAR</a>
-      <ul>
+        <li><a>BUSCAR</a>
+          <ul>
 						<li><a href="mostrando.php">POR FOLIO</a></li>
 						<li><a href="mostrande.php">POR NOMBRE USUARIO</a></li>
 						<li><a href="mostrandi.php">POR TECNICO</a></li>
-                        <li><a href="mostranda.php">POR AREA</a></li>            
-            </ul>
-            </li>
-     
+            <li><a href="mostranda.php">POR AREA</a></li>          
+          </ul>
+        </li>
+        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
+        <a href="logout.php">CERRAR SESION</a>
+      </ul>
     </div>
 
   <div class="jumbotron" style="text-align:center">
@@ -299,7 +320,6 @@ div.scrollmenu a:hover {
              <br>
              <button type="submit" class="btn btn-outline-primary">Buscar</button>
              <br>
-             <button type="submit" class="btn btn-outline-primary">hacer pdf</button>
          </form>
          </div></div>
     <div class="col md">

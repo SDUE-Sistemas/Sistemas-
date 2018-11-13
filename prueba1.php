@@ -17,9 +17,7 @@ setcookie('password', $password, time()+60*60);
     <title>Document</title>
 </head>
 <body>
-    <?php if(isset($_COOKIE['usuario'])): ?>
-    <?php echo 'jai' ?>
-    <?php else : ?>
+    <?php if(!(isset($_COOKIE['usuario']))): ?>
     <?php header('Location: prueba1.php'); ?>
     <?php endif ?>
 </body>

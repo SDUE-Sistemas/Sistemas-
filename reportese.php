@@ -56,14 +56,87 @@ function elimina_acentos($text)
         $text = preg_replace(array_keys($patron),array_values($patron),$text);
         return $text;
     }
+    if($tecnico == "KARLA LIRA"){
+
+        include_once('info.php');
+    $query = "SELECT reportes FROM tecnicos WHERE tecnico='".KARLA."'";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $x = $statement->fetch();
     
+    $query = "UPDATE tecnicos
+    SET reportes = :x WHERE tecnico='".KARLA."'"; 
+    $statement = $db->prepare($query); 
+    $statement-> bindValue(':x', ($x['reportes']+1));
+    $statement->execute();
+    $statement->closeCursor();
+    }
+    elseif($tecnico == "JUAN HERNANDEZ"){
+
+        include_once('info.php');
+        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".JUAN."'";
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $x = $statement->fetch();
+        
+        $query = "UPDATE tecnicos
+        SET reportes = :x WHERE tecnico='".JUAN."'"; 
+        $statement = $db->prepare($query); 
+        $statement-> bindValue(':x', ($x['reportes']+1));
+        $statement->execute();
+        $statement->closeCursor();
+    }
+    elseif($tecnico == "MYRNA ENRIQUEZ"){
+
+        include_once('info.php');
+        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".MYRNA."'";
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $x = $statement->fetch();
+        
+        $query = "UPDATE tecnicos
+        SET reportes = :x WHERE tecnico='".MYRNA."'"; 
+        $statement = $db->prepare($query); 
+        $statement-> bindValue(':x', ($x['reportes']+1));
+        $statement->execute();
+        $statement->closeCursor();
+    }
+    elseif($tecnico == "OMAR HERRERA"){
+
+        include_once('info.php');
+        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".OMAR."'";
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $x = $statement->fetch();
+        
+        $query = "UPDATE tecnicos
+        SET reportes = :x WHERE tecnico='".OMAR."'"; 
+        $statement = $db->prepare($query); 
+        $statement-> bindValue(':x', ($x['reportes']+1));
+        $statement->execute();
+        $statement->closeCursor();
+    }
+    elseif($tecnico == "OTROS"){
+        
+        include_once('info.php');
+        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".OTROS."'";
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $x = $statement->fetch();
+        
+        $query = "UPDATE tecnicos
+        SET reportes = :x WHERE tecnico='".OTROS."'"; 
+        $statement = $db->prepare($query); 
+        $statement-> bindValue(':x', ($x['reportes']+1));
+        $statement->execute();
+        $statement->closeCursor();
+    }
 ?>
 <?php
     include_once('info.php');
     $query = "INSERT INTO reportes(estado, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4)
             VALUES(:estado, :detalles, :asunto, :usuario, :departamento, :tecnico, :e1, :e2, :e3, :e4)";
     $statement = $db->prepare($query); 
-
     $detalles = $_POST['detalles'];
     $asunto = $_POST['asunto'];
     $usuario = $_POST['usuario'];
@@ -76,8 +149,8 @@ function elimina_acentos($text)
     $estado = 0;
 
     $detalles=elimina_acentos($detalles);
-    $asunto = elimina_acentos($asunto);
-    $usuario = elimina_acentos($usuario);
+    $asunto=elimina_acentos($asunto);
+    $usuario=elimina_acentos($usuario);
 
     $statement->bindValue(':e1', $e1);
     $statement->bindValue(':e2', $e2);
@@ -92,14 +165,5 @@ function elimina_acentos($text)
     $statement->execute();
     $statement->closeCursor();
 
-?>
-<?php
- include_once('info.php');
- $query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
- $statement = $db->prepare($query);
- $statement->execute();
- $folio = $statement->fetch();
- $statement->closeCursor();
-
-header('Location: folio.php');
+    header('Location: folio.php');
 ?>
