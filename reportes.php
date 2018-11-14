@@ -1,12 +1,35 @@
 <?php if(isset($_COOKIE['usuario']) && isset($_COOKIE['password'])) :?>
 <?php
+
+
 include_once('info.php');
 $query = "SELECT pass FROM tecnicos WHERE tecnico='".$_COOKIE['usuario']."'";
 $statement = $db->prepare($query);
 $statement->execute();
 $usuario = $statement->fetch();
 $statement->closeCursor();
-if($usuario['pass']==$_COOKIE['password']){ ?>
+
+
+
+if($usuario['pass']==$_COOKIE['password']){ 
+  if($_COOKIE['usuario'] == "KARLA"){
+    $user='KARLA LIRA';
+  }elseif($_COOKIE['usuario'] == "JUAN"){
+    $user='JUAN HERNANDEZ';
+  }elseif($_COOKIE['usuario'] == "MYRNA"){
+   $user='MYRNA ENRIQUEZ';
+  }elseif($_COOKIE['usuario'] == "OMAR"){
+   $user='OMAR HERRERA';
+  }elseif($_COOKIE['usuario'] == "OTROS"){
+   $user='OTROS';
+  }
+  
+  $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $nr = $statement->fetchAll();
+  $statement->closeCursor();
+  $n = sizeof($nr);?>
   
   <!doctype html>
 <html lang="en">
@@ -35,6 +58,8 @@ if($usuario['pass']==$_COOKIE['password']){ ?>
     overflow: auto;
     white-space: nowrap;
 }
+
+
 
 div.scrollmenu a {
     display: inline-block;
@@ -89,8 +114,22 @@ div.scrollmenu a:hover {
             <li><a href="mostranda.php">POR AREA</a></li>          
           </ul>
         </li>
-        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
-        <a href="logout.php">CERRAR SESION</a>
+        <a href="termrepor.php">TERMINAR MIS REPORTES (<?php echo $n ?>)</a>
+        <a href="graficas.php">GRAFICAS</a>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul style="float:right">
+        <li ><a class="log" href="logout.php">CERRAR SESION</a></li>
+        </ul>
       </ul>
     </div>
 
@@ -109,8 +148,7 @@ div.scrollmenu a:hover {
       <div class="col-md">
         <div class="form-group">
          <label for=""></label>
-           <input type="text"
-             class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 100%;" disabled>
+           <input type="text" class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 100%;" disabled>
              <br>
              <div class="row">
              <div class="col-md">
@@ -179,7 +217,7 @@ div.scrollmenu a:hover {
             <div class="form-group">
               <label for=""></label>
               <!-- detalles -->
-              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center"></textarea>
+              
             </div> 
           </div>
         </form>

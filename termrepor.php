@@ -26,6 +26,13 @@ if(!($usuario['pass']==$_COOKIE['password'])){
   $user='OTROS';
 }
 include_once('info.php');
+
+$query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
+$statement = $db->prepare($query);
+$statement->execute();
+$nr = $statement->fetchAll();
+$statement->closeCursor();
+$n = sizeof($nr);
 $query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE tecnico='".$user."' AND estado = 0";
 $statement = $db->prepare($query);
 $statement->execute();
@@ -107,7 +114,20 @@ div.scrollmenu a:hover {
             <li><a href="mostranda.php">POR AREA</a></li>          
           </ul>
         </li>
-        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
+        <a href="termrepor.php">TERMINAR MIS REPORTES (<?php echo $n ?>)</a>
+        <a href="graficas.php">GRAFICAS</a><ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul style="float:right">
+        <li ><a class="log" href="logout.php">CERRAR SESION</a></li>
       </ul>
     </div>
     
@@ -154,15 +174,34 @@ div.scrollmenu a:hover {
              </div>
              </div>
              <br>
+             <select class="form-control" name="causa" form="main">
+                  <option>FALLA</option>
+                  <option>CAPACITACION</option>
+                  <option>NUEVO REQUERIMIENTO</option>
+                  <option>SEDU</option>
+                </select>
+             <br>
+             <select class="form-control" name="atendio" form="main">
+                  <option>KARLA LIRA</option>
+                  <option>JUAN HERNANDEZ</option>
+                  <option>MYRNA ENRIQUEZ</option>
+                  <option>OMAR HERRERA</option>
+                  <option>OTROS</option>
+                </select>
+             
             
         </div>
+        <form  method="post" form="main">
+          <input type="text" value="<?php echo $reporte['folio']; ?>" form="main" name="folio" hidden>
+          <button type="submit" class="btn btn-secondary" form="main" style="width: 600px; height: 120px;">TERMINAR</button>
+          </form>
       </div>
     <!-- Parte Derecha -->
       <div class="col-md">
       <!-- Formulario -->
      
 
-        <form style="text-align:rigth;" method="post" action="modificare.php?folio=<?php echo $reporte['folio']; ?>" id="main">
+        <form style="text-align:rigth;" method="post" action="terminado.php" id="main">
           
           <div id="main" class="form-group">
             <label for="">ASUNTO</label>
@@ -173,16 +212,22 @@ div.scrollmenu a:hover {
             <small id="helpId" class="form-text text-muted"></small>
             <label for="">DEPARTAMENTO</label>
            <!--Departamenots Desplegables-->
-           <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
+           <input type="text" class="form-control" name="departamento" id="" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
               
               <br>
             <!--Encargados Desplegable -->
             <label>TECNICO</label>
-            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
-
+            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled> 
+            <br>
+            <label>FECHA EN QUE SE ATENDIO</label>
+                <input type="text" class="form-control" name="fecha" form="main" aria-describedby="helpId" placeholder="FECHA EN QUE SE ATENDIO"> 
+                <br>
             <div class="form-group">
             <label for="">DETALLES</label>
-              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center" disabled><?php echo $reporte['detalles']; ?> </textarea>
+              <textarea class="form-control" name="detalles" id="" rows="5" form="main" placeholder="DETALLES" style="text-align:center" > </textarea>
+              <div class="form-group">
+               
+              </div>
             </div>   
                               
           </div>
@@ -194,7 +239,7 @@ div.scrollmenu a:hover {
     </div>
 </div>
     <?php }else{ ?>
-    <h1>NO TIENE REPORTES SIN TERMINAR</h1>
+    <h1 style="text-align:center">NO TIENE REPORTES SIN TERMINAR</h1>
     <?PHP } ?>
 <!-- Librerias No Mover >:V -->
     <!-- Optional JavaScript -->

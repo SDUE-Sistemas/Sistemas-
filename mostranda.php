@@ -6,6 +6,24 @@
   $statement->execute();
   $usuario = $statement->fetch();
   $statement->closeCursor();
+  if($_COOKIE['usuario'] == "KARLA"){
+    $user='KARLA LIRA';
+  }elseif($_COOKIE['usuario'] == "JUAN"){
+    $user='JUAN HERNANDEZ';
+  }elseif($_COOKIE['usuario'] == "MYRNA"){
+   $user='MYRNA ENRIQUEZ';
+  }elseif($_COOKIE['usuario'] == "OMAR"){
+   $user='OMAR HERRERA';
+  }elseif($_COOKIE['usuario'] == "OTROS"){
+   $user='OTROS';
+  }
+  
+  $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $nr = $statement->fetchAll();
+  $statement->closeCursor();
+  $n = sizeof($nr);
   }
 else{
   header('Location: reportes.php');
@@ -29,7 +47,7 @@ $statement->closeCursor();
 
 if(empty($reportes)){
 
-  header('Location: mostrandi.php');
+  header('Location: mostranda.php');
 
 }
 
@@ -107,8 +125,20 @@ if(empty($reportes)){
             <li><a href="mostranda.php">POR AREA</a></li>          
           </ul>
         </li>
-        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
-        <a href="logout.php">CERRAR SESION</a>
+        <a href="termrepor.php">TERMINAR MIS REPORTES (<?php echo $n ?>)</a>
+        <a href="graficas.php">GRAFICAS</a><ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul style="float:right">
+        <li ><a class="log" href="logout.php">CERRAR SESION</a></li>
       </ul>
     </div>
 
@@ -276,8 +306,20 @@ div.scrollmenu a:hover {
             <li><a href="mostranda.php">POR AREA</a></li>          
           </ul>
         </li>
-        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
-        <a href="logout.php">CERRAR SESION</a>
+        <a href="termrepor.php">TERMINAR MIS REPORTES (<?php echo $n ?>)</a>
+        <a href="graficas.php">GRAFICAS</a><ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul style="float:right">
+        <li ><a class="log" href="logout.php">CERRAR SESION</a></li>
       </ul>
     </div>
 

@@ -6,6 +6,24 @@
   $statement->execute();
   $usuario = $statement->fetch();
   $statement->closeCursor();
+  if($_COOKIE['usuario'] == "KARLA"){
+    $user='KARLA LIRA';
+  }elseif($_COOKIE['usuario'] == "JUAN"){
+    $user='JUAN HERNANDEZ';
+  }elseif($_COOKIE['usuario'] == "MYRNA"){
+   $user='MYRNA ENRIQUEZ';
+  }elseif($_COOKIE['usuario'] == "OMAR"){
+   $user='OMAR HERRERA';
+  }elseif($_COOKIE['usuario'] == "OTROS"){
+   $user='OTROS';
+  }
+  
+  $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $nr = $statement->fetchAll();
+  $statement->closeCursor();
+  $n = sizeof($nr);
   }
 else{
   header('Location: reportes.php');
@@ -114,8 +132,20 @@ else{
             <li><a href="mostranda.php">POR AREA</a></li>          
           </ul>
         </li>
-        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
-        <a href="logout.php">CERRAR SESION</a>
+        <a href="termrepor.php">TERMINAR MIS REPORTES (<?php echo $n ?>)</a>
+        <a href="graficas.php">GRAFICAS</a><ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul style="float:right">
+        <li ><a class="log" href="logout.php">CERRAR SESION</a></li>
       </ul>
     </div>
   <div class="jumbotron" style="text-align:center">
@@ -156,6 +186,12 @@ else{
              <br>
              <input type="text" class="form-control" name="e4" placeholder="ETIQUETA 4" value="<?php echo $reporte['e4']; ?>"style="text-align:center; width: 100%;" disabled>
              </div>
+             
+             <form action="generarpdf.php" method="post">
+             <br>
+          <input type="text" value="<?php echo $reporte['folio']; ?>" name="folio" hidden>
+          <button type="submit" class="btn btn-secondary" style="width: 600px; height: 120px;">PDF</button>
+          </form>
              </div>
              <br>
             
@@ -274,8 +310,20 @@ div.scrollmenu a:hover {
             <li><a href="mostranda.php">POR AREA</a></li>          
           </ul>
         </li>
-        <a href="termrepor.php">TERMINAR MIS REPORTES</a>
-        <a href="logout.php">CERRAR SESION</a>
+        <a href="termrepor.php">TERMINAR MIS REPORTES (<?php echo $n ?>)</a>
+        <a href="graficas.php">GRAFICAS</a><ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul style="float:right">
+        <li ><a class="log" href="logout.php">CERRAR SESION</a></li>
       </ul>
     </div>
   <div class="jumbotron" style="text-align:center">
