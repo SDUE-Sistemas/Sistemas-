@@ -18,7 +18,7 @@ if(!($usuario['pass']==$_COOKIE['password'])){
 <?php
 $folios=$_POST['folio'];
 include_once('info.php');
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folios";
+$query = "SELECT fechaa, tecnicoa, causa, folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folios";
 $statement = $db->prepare($query);
 $statement->execute();
 $reporte = $statement->fetch();
@@ -58,11 +58,23 @@ $e4="E4:";
 
 $e4 .=$reporte['e4'];
 
-$detalles="DETALLES: ";
+$detalles="";
 
 $detalles .=$reporte['detalles'];
 
+if(empty($reporte['fechaa'])){
+$fechaat="FECHA:_______________________________________________";
+}else{
+  $fechate = "Fecha de atencion: ";
+  $fechate .= $reporte['fechaa'];
+  $fechaat=$fechate;
+}
+
+if(empty($detalles)){
 $obser="____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________";
+}else{
+  $obser=$detalles;
+}
 
 require('fpdf/fpdf.php');
 $texto = "Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass.";
@@ -101,15 +113,31 @@ $pdf->MultiCell(180,10,$obser,0 , 1);
 $pdf->Ln(8);
 $pdf->Cell(20,5,"CAUSA: ",0 , 0);
 $pdf->Cell(14,5,"FALLA",0 , 0);
-$pdf->Cell(10,5,"",1 , 0);
+if($reporte['causa']=="FALLA"){
+$pdf->Cell(10,5,"",1 , 0, "L" , true);
+}else{
+  $pdf->Cell(10,5,"",1 , 0);
+}
 $pdf->Cell(30,5,"CAPACITACION",0 , 0);
-$pdf->Cell(10,5,"",1 , 0);
+if($reporte['causa']=="CAPACITACION"){
+  $pdf->Cell(10,5,"",1 , 0, "L" , true);
+  }else{
+    $pdf->Cell(10,5,"",1 , 0);
+  }
 $pdf->Cell(45,5,"NUEVO REQUERIMIENTO",0 , 0);
-$pdf->Cell(10,5,"",1 , 0);
+if($reporte['causa']=="NUEVO REQUERIMIENTO"){
+  $pdf->Cell(10,5,"",1 , 0, "L" , true);
+  }else{
+    $pdf->Cell(10,5,"",1 , 0);
+  }
 $pdf->Cell(12,5,"SEDU",0 , 0);
-$pdf->Cell(10,5,"",1 , 0);
+if($reporte['causa']=="SEDU"){
+  $pdf->Cell(10,5,"",1 , 0, "L" , true);
+  }else{
+    $pdf->Cell(10,5,"",1 , 0);
+  }
 $pdf->Ln(10);
-$pdf->Cell(100,5,"FECHA Y HORA DE ATENCION:________________________________________");
+$pdf->Cell(100,5,$fechaat);
 $pdf->Ln(12);
 $pdf->Cell(100,0,"FIRMA DEL USUARIO:");
 $pdf->Cell(100,0,"FIRMA DEL TECNICO:");

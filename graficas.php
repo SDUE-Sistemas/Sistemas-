@@ -37,7 +37,7 @@ if(!($usuario['pass']==$_COOKIE['password'])){
 include_once('info.php');
 $a = "JUAN HERNANDEZ";
 
-$query = "SELECT folio FROM reportes WHERE tecnico='".$a."'";
+$query = "SELECT folio FROM reportes WHERE tecnicoa='".$a."'";
 $statement = $db->prepare($query);
 $statement->execute();
 $juan = $statement->fetchAll();
@@ -46,7 +46,7 @@ $statement->closeCursor();
 
 $a = "KARLA LIRA";
 
-$query = "SELECT folio FROM reportes WHERE tecnico='".$a."'";
+$query = "SELECT folio FROM reportes WHERE tecnicoa='".$a."'";
 $statement = $db->prepare($query);
 $statement->execute();
 $karla = $statement->fetchAll();
@@ -55,7 +55,7 @@ $statement->closeCursor();
 
 $a = "MYRNA ENRIQUEZ";
 
-$query = "SELECT folio FROM reportes WHERE tecnico='".$a."'";
+$query = "SELECT folio FROM reportes WHERE tecnicoa='".$a."'";
 $statement = $db->prepare($query);
 $statement->execute();
 $myrna = $statement->fetchAll();
@@ -64,7 +64,7 @@ $statement->closeCursor();
 
 $a = "OMAR HERRERA";
 
-$query = "SELECT folio FROM reportes WHERE tecnico='".$a."'";
+$query = "SELECT folio FROM reportes WHERE tecnicoa='".$a."'";
 $statement = $db->prepare($query);
 $statement->execute();
 $omar = $statement->fetchAll();
@@ -73,12 +73,45 @@ $statement->closeCursor();
 
 $a = "OTROS";
 
-$query = "SELECT folio FROM reportes WHERE tecnico='".$a."'";
+$query = "SELECT folio FROM reportes WHERE tecnicoa='".$a."'";
 $statement = $db->prepare($query);
 $statement->execute();
 $otros = $statement->fetchAll();
 $otros = sizeof($otros);
 $statement->closeCursor();
+
+$a="FALLA";
+$query = "SELECT causa FROM reportes WHERE causa='".$a."'";
+$statement = $db->prepare($query);
+$statement->execute();
+$falla = $statement->fetchAll();
+$falla = sizeof($falla);
+$statement->closeCursor();
+
+$a="CAPACITACION";
+$query = "SELECT causa FROM reportes WHERE causa='".$a."'";
+$statement = $db->prepare($query);
+$statement->execute();
+$cap = $statement->fetchAll();
+$cap = sizeof($cap);
+$statement->closeCursor();
+
+$a="NUEVO REQUERIMIENTO";
+$query = "SELECT causa FROM reportes WHERE causa='".$a."'";
+$statement = $db->prepare($query);
+$statement->execute();
+$req = $statement->fetchAll();
+$req = sizeof($req);
+$statement->closeCursor();
+
+$a="SEDU";
+$query = "SELECT causa FROM reportes WHERE causa='".$a."'";
+$statement = $db->prepare($query);
+$statement->execute();
+$sedu = $statement->fetchAll();
+$sedu = sizeof($sedu);
+$statement->closeCursor();
+
 ?>
 
 <!-- Encontrado -->
@@ -187,7 +220,6 @@ $statement->closeCursor();
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
-      
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
@@ -208,10 +240,267 @@ $statement->closeCursor();
         chart.draw(data, options);
       }
     </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['','REPORTES'],
+          ['FALLA',<?php echo $falla ?>],
+          ['CAP.',<?php echo $cap ?>],
+          ['REQ.', <?php echo $req ?>],
+          ['SEDU',<?php echo $sedu ?>]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'CAUSAS DE LOS REPORTES',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      var options = {
+          chart: {
+            title: '',
+          }
+        };
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['', 'REPORTES HECHOS'],
+          ["ADMINISTRATIVO", <?php
+          $a="ADMINISTRATIVO";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["COORDINACION Y GESTION CATASTRAL", <?php
+          $a="COORDINACION Y GESTION CATASTRAL";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["CUAHUTEMOC", <?php
+          $a="CUAHUTEMOC";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["DELICIAS", <?php
+          $a="DELICIAS";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["DESPACHO S.D.U.E", <?php
+          $a="DESPACHO S.D.U.E";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["DIR. CATASTRO", <?php
+          $a="DIR. CATASTRO";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["DIR. DESARROLLO URBANO", <?php
+          $a="DIR. DESARROLLO URBANO";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["DIR. ECOLOGIA",<?php
+          $a="DIR. ECOLOGIA";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["FORESTACION Y REFORESTACION", <?php
+          $a="FORESTACION Y REFORESTACION";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["INFORM. GEOGRAFICA Y CART. URBANA", <?php
+          $a="INFORM. GEOGRAFICA Y CART. URBANA";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["JUAREZ",<?php
+          $a="JUAREZ";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["JURIDICO", <?php
+          $a="JURIDICO";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["MOVILIDAD URBANA", <?php
+          $a="MOVILIDAD URBANA";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["NVO. CASAS GRANDES", <?php
+          $a="NVO. CASAS GRANDES";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["ORD. ECOLOGICO E IMPAC. AMB.", <?php
+          $a="ORD. ECOLOGICO E IMPAC. AMB";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["PARRAL", <?php
+          $a="PARRAL";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["PLANEACION", <?php
+          $a="PLANEACION";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["PREVENCION Y CONTROL CONTAM.", <?php
+          $a="PREVENCION Y CONTROL CONTAM";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["PROYECTOS ESPECIALES", <?php
+          $a="PROYECTOS ESPECIALES";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["REGULARIZACION", <?php
+          $a="REGULARIZACION";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>],
+          ["VIDA SILVESTRE",<?php
+          $a="VIDA SILVESTRE";
+          $query = "SELECT departamento FROM reportes WHERE departamento='".$a."'";
+          $statement = $db->prepare($query);
+          $statement->execute();
+          $xd = $statement->fetchAll();
+          $xd = sizeof($xd);
+          $statement->closeCursor();
+          echo $xd;?>]
+          
+        ]);
+
+        var options = {
+          title: '',
+          width: 900,
+          legend: { position: 'none' },
+          chart: { title: '',
+                   subtitle: '' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'DEPARTAMENTOS'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        chart.draw(data, options);
+      };
+    </script>
+    
   </head>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+  <div class="row">
+  <div class="col-md">
+    <div id="piechart" style="width: 700px; height: 500px;"></div>
+</div>
+  <div class="col-md">
+      <div id="columnchart_material" style="width: 00px; height: 500px;"></div>
+      </div>
 
-
+</div>
+     <div id="top_x_div" style="width: 900px; height: 500px;"></div>
 <!-- Librerias No Mover >:V -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

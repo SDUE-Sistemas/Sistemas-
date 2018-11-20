@@ -207,12 +207,7 @@ $statement->closeCursor();
               <br>
             <!--Encargados Desplegable -->
             <label>TECNICO</label>
-            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
-
-            <div class="form-group">
-            <label for="">DETALLES</label>
-              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center" disabled><?php echo $reporte['detalles']; ?> </textarea>
-            </div>                        
+            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>                      
           </div>
       </div>
     </div>

@@ -47,11 +47,14 @@ $folio = $_POST['folio'];
 
 if($folio < ($x['folio']+1) && $folio > 0){
 
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folio";
+$query = "SELECT folio, estado, fecha , asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folio";
 $statement = $db->prepare($query);
 $statement->execute();
 $reporte = $statement->fetch();
 $statement->closeCursor();
+if($reporte['estado'] == 1){
+  header('Location: modificar.php');
+}
 }
 else{
   header('Location: modificar.php');
@@ -229,11 +232,7 @@ div.scrollmenu a:hover {
                   <option  <?php if($reporte['tecnico']=='MYRNA ENRIQUEZ'){echo 'selected';}?> >MYRNA ENRIQUEZ</option>
                   <option  <?php if($reporte['tecnico']=='OMAR HERRERA'){echo 'selected';}?> >OMAR HERRERA</option>
                   <option  <?php if($reporte['tecnico']=='OTROS'){echo 'selected';}?> >OTROS</option>
-                </select>
-            <div class="form-group">
-              <label for=""></label>
-              <textarea class="form-control" name="detalles" id="" rows="5" placeholder="DETALLES" style="text-align:center"><?php echo $reporte['detalles']; ?></textarea>
-            </div>                        
+                </select>                       
           </div>
         </form>
       </div>
