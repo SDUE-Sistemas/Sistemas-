@@ -14,17 +14,7 @@ if(!($usuario['pass']==$_COOKIE['password'])){
   header('Location: reportes.php');
 }
 
- if($_COOKIE['usuario'] == "KARLA"){
-   $user='KARLA LIRA';
- }elseif($_COOKIE['usuario'] == "JUAN"){
-   $user='JUAN HERNANDEZ';
- }elseif($_COOKIE['usuario'] == "MYRNA"){
-  $user='MYRNA ENRIQUEZ';
-}elseif($_COOKIE['usuario'] == "OMAR"){
-  $user='OMAR HERRERA';
-}elseif($_COOKIE['usuario'] == "OTROS"){
-  $user='OTROS';
-}
+$user=$_COOKIE['usuario'];
 include_once('info.php');
 
 $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
@@ -54,50 +44,9 @@ $statement->closeCursor();
  
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-    div.scrollmenu {
-    background-color:darkgrey;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-div.scrollmenu a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-}
-
-div.scrollmenu a:hover {
-    background-color:white;
-}
-
-	ul, ol {
-				list-style:none;
-			}
-			
-			.nav li a {
-				display:block;
-        background-color:darkgrey;
-			}
-			
-			
-			.nav li ul {
-				display:none;
-				position:absolute;
-
-			}
-			
-			.nav li:hover > ul {
-				display:block;
-      
-			}
-
-    
-    </style>
+        <link rel="stylesheet" href="menu.css">
      </head>
-  <body>
+  <body >
 
     <!--encabezado-->
     
@@ -163,37 +112,44 @@ div.scrollmenu a:hover {
             <label>ETIQUETAS</label>
              <div class="row">
              <div class="col-md">
-             <input type="text" class="form-control" name="e1" placeholder="ETIQUETA 1" value="<?php echo $reporte['e1'] ?>" style="text-align:center; width: 100%;" disabled>
+             <input type="text" class="form-control" form="main<?php echo $reporte['folio']?>" name="e1" placeholder="ETIQUETA 1" value="<?php echo $reporte['e1'] ?>" style="text-align:center; width: 100%;">
              <br>
-             <input type="text" class="form-control" name="e3" placeholder="ETIQUETA 3" value="<?php echo $reporte['e3']; ?>"style="text-align:center; width: 100%;" disabled>
+             <input type="text" class="form-control" form="main<?php echo $reporte['folio']?>" name="e3" placeholder="ETIQUETA 3" value="<?php echo $reporte['e3']; ?>"style="text-align:center; width: 100%;">
              </div>
              <div class="col-md">
-             <input type="text" class="form-control" name="e2" placeholder="ETIQUETA 2" value="<?php echo $reporte['e2']; ?>"style="text-align:center; width: 100%;" disabled>
+             <input type="text" class="form-control" form="main<?php echo $reporte['folio']?>" name="e2" placeholder="ETIQUETA 2" value="<?php echo $reporte['e2']; ?>"style="text-align:center; width: 100%;">
              <br>
-             <input type="text" class="form-control" name="e4" placeholder="ETIQUETA 4" value="<?php echo $reporte['e4']; ?>"style="text-align:center; width: 100%;" disabled>
+             <input type="text" class="form-control" form="main<?php echo $reporte['folio']?>" name="e4" placeholder="ETIQUETA 4" value="<?php echo $reporte['e4']; ?>"style="text-align:center; width: 100%;">
              </div>
              </div>
              <br>
-             <select class="form-control" name="causa" form="main">
+             <select class="form-control" name="causa" form="main<?php echo $reporte['folio']?>">
                   <option>FALLA</option>
                   <option>CAPACITACION</option>
                   <option>NUEVO REQUERIMIENTO</option>
                   <option>SEDU</option>
                 </select>
              <br>
-             <select class="form-control" name="atendio" form="main">
-                  <option>KARLA LIRA</option>
-                  <option>JUAN HERNANDEZ</option>
-                  <option>MYRNA ENRIQUEZ</option>
-                  <option>OMAR HERRERA</option>
-                  <option>OTROS</option>
+             <select class="form-control" name="atendio" form="main <?php echo $reporte['folio']?>">
+             <?php
+            include_once('info.php');
+            $query = "SELECT tecnico FROM tecnicos";
+            $statement = $db->prepare($query);
+            $statement->execute();
+            $reportes = $statement->fetchALL();
+            $statement->closeCursor();
+            ?>
+                <select class="form-control" name="tecnico">
+                <?php  foreach($reportes as $reporte): ?>
+                  <option><?php echo $reporte['tecnico'];?></option>
+                <?php endforeach; ?>
                 </select>
              
             
         </div>
-        <form  method="post" form="main">
-          <input type="text" value="<?php echo $reporte['folio']; ?>" form="main" name="folio" hidden>
-          <button type="submit" class="btn btn-secondary" form="main" style="width: 600px; height: 120px;">TERMINAR</button>
+        <form  method="post" form="main<?php echo $reporte['folio']?>">
+          <input type="text" value="<?php echo $reporte['folio']; ?>" form="main<?php echo $reporte['folio']?>" name="folio" hidden>
+          <button type="submit" class="btn btn-secondary" form="main<?php echo $reporte['folio']?>" style="width: 600px; height: 120px;">TERMINAR</button>
           </form>
       </div>
     <!-- Parte Derecha -->
@@ -201,7 +157,7 @@ div.scrollmenu a:hover {
       <!-- Formulario -->
      
 
-        <form style="text-align:rigth;" method="post" action="terminado.php" id="main">
+        <form style="text-align:rigth;" method="post" action="terminado.php" id="main<?php echo $reporte['folio']?>">
           
           <div id="main" class="form-group">
             <label for="">ASUNTO</label>
@@ -220,11 +176,11 @@ div.scrollmenu a:hover {
             <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled> 
             <br>
             <label>FECHA EN QUE SE ATENDIO</label>
-                <input type="text" class="form-control" name="fecha" form="main" aria-describedby="helpId" placeholder="FECHA EN QUE SE ATENDIO"> 
+                <input type="text" class="form-control" name="fecha" form="main<?php echo $reporte['folio']?>" aria-describedby="helpId" placeholder="FECHA EN QUE SE ATENDIO"> 
                 <br>
             <div class="form-group">
             <label for="">DETALLES</label>
-              <textarea class="form-control" name="detalles" id="" rows="5" form="main" placeholder="DETALLES" style="text-align:center" > </textarea>
+              <textarea class="form-control" name="detalles" id="" rows="5" form="main<?php echo $reporte['folio']?>" placeholder="DETALLES" style="text-align:center" > </textarea>
               <div class="form-group">
                
               </div>

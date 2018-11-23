@@ -12,17 +12,8 @@ $statement->closeCursor();
 
 
 if($usuario['pass']==$_COOKIE['password']){ 
-  if($_COOKIE['usuario'] == "KARLA"){
-    $user='KARLA LIRA';
-  }elseif($_COOKIE['usuario'] == "JUAN"){
-    $user='JUAN HERNANDEZ';
-  }elseif($_COOKIE['usuario'] == "MYRNA"){
-   $user='MYRNA ENRIQUEZ';
-  }elseif($_COOKIE['usuario'] == "OMAR"){
-   $user='OMAR HERRERA';
-  }elseif($_COOKIE['usuario'] == "OTROS"){
-   $user='OTROS';
-  }
+
+  $user=$_COOKIE['usuario'];
   
   $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
   $statement = $db->prepare($query);
@@ -52,50 +43,7 @@ if($usuario['pass']==$_COOKIE['password']){
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-    div.scrollmenu {
-    background-color:darkgrey;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-
-
-div.scrollmenu a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-}
-
-div.scrollmenu a:hover {
-    background-color:white;
-}
-
-	ul, ol {
-				list-style:none;
-			}
-			
-			.nav li a {
-				display:block;
-        background-color:darkgrey;
-			}
-			
-			
-			.nav li ul {
-				display:none;
-				position:absolute;
-
-			}
-			
-			.nav li:hover > ul {
-				display:block;
-      
-			}
-
-    
-    </style>
+    <link rel="stylesheet" href="menu.css">
      </head>
   <body>
 
@@ -163,7 +111,7 @@ div.scrollmenu a:hover {
              </div>
              </div>
              <br>
-             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 210px;" form="main">GUARDAR</button>
+             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 50px;" form="main">GUARDAR</button>
         </div>
       </div>
 
@@ -207,12 +155,18 @@ div.scrollmenu a:hover {
               </select>
               <br>
             <!--Encargados Desplegable -->
+            <?php
+            include_once('info.php');
+            $query = "SELECT tecnico FROM tecnicos";
+            $statement = $db->prepare($query);
+            $statement->execute();
+            $reportes = $statement->fetchALL();
+            $statement->closeCursor();
+            ?>
                 <select class="form-control" name="tecnico">
-                  <option>KARLA LIRA</option>
-                  <option>JUAN HERNANDEZ</option>
-                  <option>MYRNA ENRIQUEZ</option>
-                  <option>OMAR HERRERA</option>
-                  <option>OTROS</option>
+                <?php  foreach($reportes as $reporte): ?>
+                  <option><?php echo $reporte['tecnico'];?></option>
+                <?php endforeach; ?>
                 </select>
             <div class="form-group">
               <label for=""></label>

@@ -63,48 +63,7 @@ $statement->closeCursor();
  
        <!-- Bootstrap CSS -->
        <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-    div.scrollmenu {
-    background-color:darkgrey;
-    overflow: auto;
-    white-space: nowrap;
-    }
-
-    div.scrollmenu a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-    }
-
-    div.scrollmenu a:hover {
-    background-color:white;
-    }
-
-	ul, ol {
-				list-style:none;
-			}
-			
-			.nav li a {
-				display:block;
-        background-color:darkgrey;
-			}
-			
-			
-			.nav li ul {
-				display:none;
-				position:absolute;
-
-			}
-			
-			.nav li:hover > ul {
-				display:block;
-      
-			}
-
-    
-    </style>
+       <link rel="stylesheet" href="menu.css">
      </head>
   <body>
 

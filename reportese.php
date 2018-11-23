@@ -1,163 +1,73 @@
 <?php
-function elimina_acentos($text)
-    {
-        $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
-        $text = strtolower($text);
-        $patron = array (
-            // Espacios, puntos y comas por guion
-            //'/[\., ]+/' => ' ',
- 
-            // Vocales
-            '/\+/' => '',
-            '/&agrave;/' => 'a',
-            '/&egrave;/' => 'e',
-            '/&igrave;/' => 'i',
-            '/&ograve;/' => 'o',
-            '/&ugrave;/' => 'u',
- 
-            '/&aacute;/' => 'a',
-            '/&eacute;/' => 'e',
-            '/&iacute;/' => 'i',
-            '/&oacute;/' => 'o',
-            '/&uacute;/' => 'u',
- 
-            '/&acirc;/' => 'a',
-            '/&ecirc;/' => 'e',
-            '/&icirc;/' => 'i',
-            '/&ocirc;/' => 'o',
-            '/&ucirc;/' => 'u',
- 
-            '/&atilde;/' => 'a',
-            '/&etilde;/' => 'e',
-            '/&itilde;/' => 'i',
-            '/&otilde;/' => 'o',
-            '/&utilde;/' => 'u',
- 
-            '/&auml;/' => 'a',
-            '/&euml;/' => 'e',
-            '/&iuml;/' => 'i',
-            '/&ouml;/' => 'o',
-            '/&uuml;/' => 'u',
- 
-            '/&auml;/' => 'a',
-            '/&euml;/' => 'e',
-            '/&iuml;/' => 'i',
-            '/&ouml;/' => 'o',
-            '/&uuml;/' => 'u',
- 
-            // Otras letras y caracteres especiales
-            '/&aring;/' => 'a',
-            '/&ntilde;/' => 'n',
- 
-            // Agregar aqui mas caracteres si es necesario
- 
-        );
- 
-        $text = preg_replace(array_keys($patron),array_values($patron),$text);
-        return $text;
-    }
-    if($tecnico == "KARLA LIRA"){
-
-        include_once('info.php');
-    $query = "SELECT reportes FROM tecnicos WHERE tecnico='".KARLA."'";
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $x = $statement->fetch();
-    
-    $query = "UPDATE tecnicos
-    SET reportes = :x WHERE tecnico='".KARLA."'"; 
-    $statement = $db->prepare($query); 
-    $statement-> bindValue(':x', ($x['reportes']+1));
-    $statement->execute();
-    $statement->closeCursor();
-    }
-    elseif($tecnico == "JUAN HERNANDEZ"){
-
-        include_once('info.php');
-        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".JUAN."'";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $x = $statement->fetch();
-        
-        $query = "UPDATE tecnicos
-        SET reportes = :x WHERE tecnico='".JUAN."'"; 
-        $statement = $db->prepare($query); 
-        $statement-> bindValue(':x', ($x['reportes']+1));
-        $statement->execute();
-        $statement->closeCursor();
-    }
-    elseif($tecnico == "MYRNA ENRIQUEZ"){
-
-        include_once('info.php');
-        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".MYRNA."'";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $x = $statement->fetch();
-        
-        $query = "UPDATE tecnicos
-        SET reportes = :x WHERE tecnico='".MYRNA."'"; 
-        $statement = $db->prepare($query); 
-        $statement-> bindValue(':x', ($x['reportes']+1));
-        $statement->execute();
-        $statement->closeCursor();
-    }
-    elseif($tecnico == "OMAR HERRERA"){
-
-        include_once('info.php');
-        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".OMAR."'";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $x = $statement->fetch();
-        
-        $query = "UPDATE tecnicos
-        SET reportes = :x WHERE tecnico='".OMAR."'"; 
-        $statement = $db->prepare($query); 
-        $statement-> bindValue(':x', ($x['reportes']+1));
-        $statement->execute();
-        $statement->closeCursor();
-    }
-    elseif($tecnico == "OTROS"){
-        
-        include_once('info.php');
-        $query = "SELECT reportes FROM tecnicos WHERE tecnico='".OTROS."'";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $x = $statement->fetch();
-        
-        $query = "UPDATE tecnicos
-        SET reportes = :x WHERE tecnico='".OTROS."'"; 
-        $statement = $db->prepare($query); 
-        $statement-> bindValue(':x', ($x['reportes']+1));
-        $statement->execute();
-        $statement->closeCursor();
-    }
-?>
+$asunto = $_POST['asunto'];
+$usuario = $_POST['usuario'];
+if(empty($asunto) || empty($usuario)){
+    ?>
+     <!doctype html>
+<html lang="en">
+<head>
+<!-- Obtener el ultimo Folio -->
 <?php
     include_once('info.php');
-    $query = "INSERT INTO reportes(estado, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4)
-            VALUES(:estado, :detalles, :asunto, :usuario, :departamento, :tecnico, :e1, :e2, :e3, :e4)";
+    $query = "SELECT folio FROM reportes WHERE folio = (SELECT max(folio) FROM reportes)";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $reportes = $statement->fetch();
+    $statement->closeCursor();
+?>
+    <!-- Icono -->
+    <link rel="icon" type="image/png" href="img/icono.png" />
+    <title>Reportes</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="menu.css">
+     </head>
+  <body>
+
+
+  <div class="jumbotron" style="text-align:center">
+  <!-- imagen del lado derecho -->
+    <img src="img/Logo Chihuahua.png" alt="" style="height:150px; width:150px" align="right">
+    <!-- Nombres -->
+        <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
+        <p class="lead">OFICINA DE INFORMATICA / ERROR </p>
+      </div>
+      <h1 class='display-6' style="text-align:center">RELLENE TODOS LOS CAMPOS NESECIARIOS :)</h1>
+      <form action="reportes.php">
+      <div class="row">
+      <div class="col-md"></div>
+      <div class="col-md">
+      <button type="submit" class="btn btn-secondary" style="width: 600px; height: 50px;">VOLVER</button>
+      </div>
+      <div class="col-md"></div>
+      </div>
+      </form>
+      </body>
+      </html>
+    <?php
+
+}else{
+    include_once('info.php');
+    $query = "INSERT INTO reportes(estado, asunto, usuario, departamento, tecnico)
+            VALUES(:estado, :asunto, :usuario, :departamento, :tecnico)";
     $statement = $db->prepare($query); 
-    $detalles = $_POST['detalles'];
-    $asunto = $_POST['asunto'];
-    $usuario = $_POST['usuario'];
     $departamento = $_POST['departamento'];
     $tecnico = $_POST['tecnico'];
-    $e1 = $_POST['e1'];
-    $e2 = $_POST['e2'];
-    $e3 = $_POST['e3'];
-    $e4 = $_POST['e4'];
-    $estado = 0;
 
-    $detalles=elimina_acentos($detalles);
+    $estado = 0;
+    
+    require_once('elimina_acentos.php');
+
+    
     $asunto=elimina_acentos($asunto);
     $usuario=elimina_acentos($usuario);
 
-    $statement->bindValue(':e1', $e1);
-    $statement->bindValue(':e2', $e2);
-    $statement->bindValue(':e3', $e3);
-    $statement->bindValue(':e4', $e4);
+
     $statement->bindValue(':estado', $estado);
-    $statement->bindValue(':detalles' , strtoupper($detalles));
     $statement->bindValue(':asunto' , strtoupper($asunto));
     $statement->bindValue(':usuario' , strtoupper($usuario));
     $statement->bindValue(':departamento' , $departamento);
@@ -166,4 +76,5 @@ function elimina_acentos($text)
     $statement->closeCursor();
 
     header('Location: folio.php');
+}
 ?>

@@ -6,18 +6,7 @@
   $statement->execute();
   $usuario = $statement->fetch();
   $statement->closeCursor();
-  if($_COOKIE['usuario'] == "KARLA"){
-    $user='KARLA LIRA';
-  }elseif($_COOKIE['usuario'] == "JUAN"){
-    $user='JUAN HERNANDEZ';
-  }elseif($_COOKIE['usuario'] == "MYRNA"){
-   $user='MYRNA ENRIQUEZ';
-  }elseif($_COOKIE['usuario'] == "OMAR"){
-   $user='OMAR HERRERA';
-  }elseif($_COOKIE['usuario'] == "OTROS"){
-   $user='OTROS';
-  }
-  
+  $user=$_COOKIE['usuario'];
   $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
   $statement = $db->prepare($query);
   $statement->execute();
@@ -128,48 +117,7 @@ $statement->closeCursor();
  
        <!-- Bootstrap CSS -->
        <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-    div.scrollmenu {
-    background-color:darkgrey;
-    overflow: auto;
-    white-space: nowrap;
-    }
-
-    div.scrollmenu a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-    }
-
-    div.scrollmenu a:hover {
-    background-color:white;
-    }
-
-	ul, ol {
-				list-style:none;
-			}
-			
-			.nav li a {
-				display:block;
-        background-color:darkgrey;
-			}
-			
-			
-			.nav li ul {
-				display:none;
-				position:absolute;
-
-			}
-			
-			.nav li:hover > ul {
-				display:block;
-      
-			}
-
-    
-    </style>
+       <link rel="stylesheet" href="menu.css">
      </head>
   <body>
 
