@@ -69,7 +69,7 @@
  
     require_once('elimina_acentos.php');
     
-    $detalles=elimina_acentos(strtoupper($detalles));
+    $detalles=(elimina_acentos($detalles));
 
     $statement->bindvalue(':e1', $e1);
     $statement->bindvalue(':e2', $e2);
@@ -77,7 +77,7 @@
     $statement->bindvalue(':e4', $e4);
     $statement->bindValue(':causa', $causa);
     $statement->bindvalue(':folio', $folio);
-    $statement->bindvalue(':detalles', $detalles);
+    $statement->bindvalue(':detalles', strtoupper($detalles));
     $statement->bindvalue(':fecha', $fecha);
     $statement->bindvalue(':atendio', $atendio);
     

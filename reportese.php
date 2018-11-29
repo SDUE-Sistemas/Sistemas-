@@ -36,7 +36,7 @@ if(empty($asunto) || empty($usuario)){
         <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
         <p class="lead">OFICINA DE INFORMATICA / ERROR </p>
       </div>
-      <h1 class='display-6' style="text-align:center">RELLENE TODOS LOS CAMPOS NESECIARIOS :)</h1>
+      <h1 class='display-6' style="text-align:center">RELLENE TODOS LOS CAMPOS NECESARIOS :)</h1>
       <form action="reportes.php">
       <div class="row">
       <div class="col-md"></div>
@@ -51,6 +51,7 @@ if(empty($asunto) || empty($usuario)){
     <?php
 
 }else{
+ 
     include_once('info.php');
     $query = "INSERT INTO reportes(estado, asunto, usuario, departamento, tecnico)
             VALUES(:estado, :asunto, :usuario, :departamento, :tecnico)";
@@ -74,7 +75,9 @@ if(empty($asunto) || empty($usuario)){
     $statement->bindValue(':tecnico' , $tecnico);
     $statement->execute();
     $statement->closeCursor();
-
-    header('Location: folio.php');
+    
+    header("Location:reportes.php");
+    
 }
+
 ?>

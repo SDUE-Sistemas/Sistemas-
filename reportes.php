@@ -95,42 +95,12 @@ if($usuario['pass']==$_COOKIE['password']){
        <!-- Parte Izquierda xd-->
       <div class="col-md">
         <div class="form-group">
-         <label for=""></label>
-           <input type="text" class="form-control" name="FOLIO" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 100%;" disabled>
-             <br>
-             <div class="row">
-             <div class="col-md">
-             <input type="text" class="form-control" name="e1" form="main" placeholder="ETIQUETA 1" style="text-align:center; width: 100%;">
-             <br>
-             <input type="text" class="form-control" name="e3" form="main" placeholder="ETIQUETA 3" style="text-align:center; width: 100%;">
-             </div>
-             <div class="col-md">
-             <input type="text" class="form-control" name="e2" form="main" placeholder="ETIQUETA 2" style="text-align:center; width: 100%;">
-             <br>
-             <input type="text" class="form-control" name="e4" form="main" placeholder="ETIQUETA 4" style="text-align:center; width: 100%;">
-             </div>
-             </div>
-             <br>
-             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 50px;" form="main">GUARDAR</button>
-        </div>
-      </div>
-
-
-
-    <!-- Parte Derecha -->
-      <div class="col-md">
-        <form style="text-align:rigth;" id="main" action="reportese.php" method="post">
-          <!-- Formulario -->
-          <div id="main" class="form-group" >
-            <label for=""></label>
-            <input type="text" class="form-control" name="asunto" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center">
-            <small id="helpId" class="form-text text-muted"></small>
-            <label for=""></label>
-            <input type="text" class="form-control" name="usuario" id="" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center">
-            <small id="helpId" class="form-text text-muted"></small>
-            <label for=""></label>
+         <label for="">FOLIO</label>
+           <input type="text" class="form-control" name="folio" id="" aria-describedby="helpId" placeholder="<?php echo $reportes['folio']+1; ?>" style="text-align:center; width: 100%;" disabled>
+           <form style="text-align:rigth;" id="main" action="reportese.php" method="post">
            <!--Departamenots Desplegables-->
-              <select class="form-control" name="departamento">
+           <label>DEPARTAMENTO</label>
+           <select class="form-control" name="departamento" >
                 <option >ADMINISTRATIVO</option>
                 <option>COORDINACION Y GESTION CATASTRAL</option>
                 <option>CUAHUTEMOC</option>
@@ -153,28 +123,43 @@ if($usuario['pass']==$_COOKIE['password']){
                 <option>REGULARIZACION</option>
                 <option>VIDA SILVESTRE</option>
               </select>
-              <br>
+              
+             <br>
+             <button type="submit" class="btn btn-secondary" style="width: 600px; height: 50px;">GUARDAR</button>
+        </div>
+      </div>
+
+
+
+    <!-- Parte Derecha -->
+      <div class="col-md">
+        
+          <!-- Formulario -->
+          <div id="main" class="form-group" >
+            <LABEL>ASUNTO DEL REPORTE</LABEL>
+            <input type="text" class="form-control" form="main" name="asunto" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center">
+            <LABEL>QUIEN REPORTA</LABEL>
+            <input type="text" class="form-control" form="main" name="usuario" id="" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center">
+            
+           
             <!--Encargados Desplegable -->
             <?php
             include_once('info.php');
             $query = "SELECT tecnico FROM tecnicos";
             $statement = $db->prepare($query);
             $statement->execute();
-            $reportes = $statement->fetchALL();
+            $tecnicos = $statement->fetchALL();
             $statement->closeCursor();
             ?>
-                <select class="form-control" name="tecnico">
-                <?php  foreach($reportes as $reporte): ?>
-                  <option><?php echo $reporte['tecnico'];?></option>
+            <LABEL>TECNICO QUE LEVANTO EL REPORTE</LABEL>
+                <select class="form-control" name="tecnico" form="main">
+                <?php  foreach($tecnicos as $tecnico): ?>
+                  <option><?php echo $tecnico['tecnico'];?></option>
                 <?php endforeach; ?>
                 </select>
-            <div class="form-group">
-              <label for=""></label>
-              <!-- detalles -->
-              
-            </div> 
+
           </div>
-        </form>
+        
       </div>
     </div>
 </div>

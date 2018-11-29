@@ -23,7 +23,8 @@ $statement->execute();
 $nr = $statement->fetchAll();
 $statement->closeCursor();
 $n = sizeof($nr);
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE tecnico='".$user."' AND estado = 0";
+
+$query = "SELECT folio, fecha, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE tecnico='".$user."' AND estado = 0";
 $statement = $db->prepare($query);
 $statement->execute();
 $reportes = $statement->fetchAll();
@@ -108,7 +109,7 @@ $statement->closeCursor();
              class="form-control" name="folio" value= "<?php echo $reporte['fecha']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled> 
          </div>
          </div>
-             <br>
+    
             <label>ETIQUETAS</label>
              <div class="row">
              <div class="col-md">
@@ -122,34 +123,37 @@ $statement->closeCursor();
              <input type="text" class="form-control" form="main<?php echo $reporte['folio']?>" name="e4" placeholder="ETIQUETA 4" value="<?php echo $reporte['e4']; ?>"style="text-align:center; width: 100%;">
              </div>
              </div>
-             <br>
+             
+             <label>CAUSA
+             </label>
              <select class="form-control" name="causa" form="main<?php echo $reporte['folio']?>">
                   <option>FALLA</option>
                   <option>CAPACITACION</option>
                   <option>NUEVO REQUERIMIENTO</option>
                   <option>SEDU</option>
                 </select>
-             <br>
-             <select class="form-control" name="atendio" form="main <?php echo $reporte['folio']?>">
+            
+             
              <?php
             include_once('info.php');
             $query = "SELECT tecnico FROM tecnicos";
             $statement = $db->prepare($query);
             $statement->execute();
-            $reportes = $statement->fetchALL();
+            $tecnicos = $statement->fetchALL();
             $statement->closeCursor();
             ?>
-                <select class="form-control" name="tecnico">
-                <?php  foreach($reportes as $reporte): ?>
-                  <option><?php echo $reporte['tecnico'];?></option>
-                <?php endforeach; ?>
+            <label> TECNICO QUE ATENDIO </label>
+              <select class="form-control" name="atendio" form="main<?php echo $reporte['folio']?>">
+                <?php  foreach($tecnicos as $tecnico){ ?>
+                  <option><?php echo $tecnico["tecnico"] ?></option>
+                <?php } ?>
                 </select>
              
             
         </div>
         <form  method="post" form="main<?php echo $reporte['folio']?>">
           <input type="text" value="<?php echo $reporte['folio']; ?>" form="main<?php echo $reporte['folio']?>" name="folio" hidden>
-          <button type="submit" class="btn btn-secondary" form="main<?php echo $reporte['folio']?>" style="width: 600px; height: 120px;">TERMINAR</button>
+          <button type="submit" class="btn btn-secondary" form="main<?php echo $reporte['folio']?>" style="width: 600px; height: 60px;">TERMINAR</button>
           </form>
       </div>
     <!-- Parte Derecha -->
@@ -161,7 +165,7 @@ $statement->closeCursor();
           
           <div id="main" class="form-group">
             <label for="">ASUNTO</label>
-            <input type="text" class="form-control" name="asunto" value= "<?php echo $reporte['asunto']; ?>" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center" disabled>
+            <input type="text" class="form-control" name="asunto" value= "<?php echo $reporte["asunto"]; ?>" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center" disabled>
             <small id="helpId" class="form-text text-muted"></small>
             <label for="">USUARIO</label>
             <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['usuario']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
@@ -170,14 +174,14 @@ $statement->closeCursor();
            <!--Departamenots Desplegables-->
            <input type="text" class="form-control" name="departamento" id="" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
               
-              <br>
+    
             <!--Encargados Desplegable -->
             <label>TECNICO</label>
             <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled> 
-            <br>
+
             <label>FECHA EN QUE SE ATENDIO</label>
                 <input type="text" class="form-control" name="fecha" form="main<?php echo $reporte['folio']?>" aria-describedby="helpId" placeholder="FECHA EN QUE SE ATENDIO"> 
-                <br>
+
             <div class="form-group">
             <label for="">DETALLES</label>
               <textarea class="form-control" name="detalles" id="" rows="5" form="main<?php echo $reporte['folio']?>" placeholder="DETALLES" style="text-align:center" > </textarea>

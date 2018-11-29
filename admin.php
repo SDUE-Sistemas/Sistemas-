@@ -103,9 +103,9 @@ $n = sizeof($nr);
       
       <div class="col-md">
       <h1>Agregar Usuario</h1><br>
-      <form>
-      <input type="text" name="" id=""class="form-control" style="width:500px" placeholder="Nombre" aria-describedby="helpId" placeholder="">
-      <input type="text" name="" id=""class="form-control" style="width:500px" placeholder="Password" aria-describedby="helpId" placeholder="">
+      <form action="agregar.php" method="post">
+      <input type="text" name="nombre" id=""class="form-control" style="width:500px" placeholder="Nombre" aria-describedby="helpId" >
+      <input type="text" name="contra" id=""class="form-control" style="width:500px" placeholder="Password" aria-describedby="helpId" >
       <button name="" type="submit" id="" class="btn btn-primary"  class="form-control" href="" role="button">AGREGAR</button> 
       </form>
       <br>
@@ -123,7 +123,7 @@ $n = sizeof($nr);
             ?>
                 <select class="form-control" name="tecnico">
                 <?php  foreach($reportes as $reporte): ?>
-                  <option><?php echo $reporte['tecnico'];?></option>
+                  <option <?php if($reporte['tecnico']=="JUAN HERNANDEZ"){echo "disabled";}?>><?php echo $reporte['tecnico'];?></option>
                 <?php endforeach; ?>
                 </select>
                 </form>

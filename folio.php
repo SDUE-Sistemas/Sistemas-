@@ -6,17 +6,9 @@
   $statement->execute();
   $usuario = $statement->fetch();
   $statement->closeCursor();
-  if($_COOKIE['usuario'] == "KARLA"){
-    $user='KARLA LIRA';
-  }elseif($_COOKIE['usuario'] == "JUAN"){
-    $user='JUAN HERNANDEZ';
-  }elseif($_COOKIE['usuario'] == "MYRNA"){
-   $user='MYRNA ENRIQUEZ';
-  }elseif($_COOKIE['usuario'] == "OMAR"){
-   $user='OMAR HERRERA';
-  }elseif($_COOKIE['usuario'] == "OTROS"){
-   $user='OTROS';
-  }
+
+   $user=$_COOKIE['usuario'];
+  
   
   $query = "SELECT folio FROM reportes WHERE tecnico='".$user."' AND estado = 0";
   $statement = $db->prepare($query);
@@ -55,7 +47,7 @@ $statement->closeCursor();
   <head>
     <!-- Icono -->
     <link rel="icon" type="image/png" href="img/icono.png" />
-    <title>Modificar</title>
+    <title>Folio</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -119,13 +111,13 @@ $statement->closeCursor();
          <label for="">FOLIO</label>
            <input type="text"
              class="form-control" name="folio" value= "<?php echo $reporte['folio']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled>
-             <br>
+             
              <label for="" text-align:center;>FECHA</label>
              <input type="text"
              class="form-control" name="folio" value= "<?php echo $reporte['fecha']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled> 
          </div>
          </div>
-             <br>
+             
             <label>ETIQUETAS</label>
              <div class="row">
              <div class="col-md">
@@ -142,39 +134,50 @@ $statement->closeCursor();
              <br>
             
         </div>
-        <form action="generarpdf.php" method="post">
-          <input type="text" value="<?php echo $reporte['folio']; ?>" name="folio" hidden>
-          <button type="submit" class="btn btn-secondary" style="width: 600px; height: 120px;">PDF</button>
-          </form>
+        
+        
       </div>
     <!-- Parte Derecha -->
       <div class="col-md">
       <!-- Formulario -->
-        <form style="text-align:rigth;" method="post" action="modificare.php?folio=<?php echo $reporte['folio']; ?>" id="main">
+      <form action="reportes.php" method="post">  
           
           <div id="main" class="form-group">
             <label for="">ASUNTO</label>
-            <input type="text" class="form-control" name="asunto" value= "<?php echo $reporte['asunto']; ?>" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center" disabled>
+            <input type="text" class="form-control" value= "<?php echo $reporte['asunto']; ?>" id="" aria-describedby="helpId" placeholder="ASUNTO DEL REPORTE" style="text-align:center" disabled>
             <small id="helpId" class="form-text text-muted"></small>
             <label for="">USUARIO</label>
-            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['usuario']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
+            <input type="text" class="form-control" value= "<?php echo $reporte['usuario']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
             <small id="helpId" class="form-text text-muted"></small>
             <label for="">DEPARTAMENTO</label>
            <!--Departamenots Desplegables-->
-           <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
+           <input type="text" class="form-control" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
               
-              <br>
+              
             <!--Encargados Desplegable -->
             <label>TECNICO</label>
-            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>                      
+            <input type="text" class="form-control" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>                      
           </div>
+          <br> 
+          
       </div>
     </div>
+    
     </form>
-        <form action="reportes.php" method="post">  
-        <button type="submit" class="btn btn-secondary" style="width: 100%; height: 210px;">OK</button>
-
-        </form> 
+    <div class="row"> 
+        <div class="col-md">
+        <form action="reportes.php">
+        <button type="submit" class="btn btn-secondary" style="width: 100%; height: 60px;">OK</button>
+          </div>
+          </form>
+          <div class="col-md">
+          <form action="generarpdf.php" method="post">
+          <input type="text" value="<?php echo $reporte['folio']; ?>" name="folio" hidden>
+          <button type="submit" class="btn btn-secondary" style="width: 100%; height: 60px;">PDF</button>
+          </form>
+          </div>
+          </div>
+         
 </div>
 <!-- Librerias No Mover >:V -->
     <!-- Optional JavaScript -->

@@ -42,12 +42,6 @@ $statement = $db->prepare($query);
 $statement->execute();
 $reporte = $statement->fetch();
 $statement->closeCursor();
-if($reporte['estado'] == 1){
-  header('Location: modificar.php');
-}
-}
-else{
-  header('Location: modificar.php');
 }
 ?>
 
@@ -105,8 +99,17 @@ else{
     <!-- Nombres -->
         <h1 class="display-6">SECRETARÍA DE DESARROLLO URBANO Y ECOLOGÍA</h1>
         <p class="lead">OFICINA DE INFORMATICA / MODIFICAR </p>
+  
       </div>
-
+     
+      <?php if($reporte['estado'] == 1){?>
+<h1>no se pueden modificar los reportes terminados</h1>
+ <?php }else{?>
+  <?php 
+      if(!$folio < ($x['folio']+1) && $folio > 0){
+        ?>
+<h1>no se pueden modificar los reportes inexistentes</h1>
+      <?php }else{ ?>
       <!-- Contenedor -->
 <div class="container">
   <div class="row">
@@ -195,6 +198,7 @@ else{
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
+ <?php }} ?>
 <?php else: ?>
 <!doctype html>
 <html lang="en">
@@ -277,4 +281,5 @@ else{
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
+
 <?php endif; ?>

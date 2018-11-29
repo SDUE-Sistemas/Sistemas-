@@ -101,6 +101,8 @@ $statement->closeCursor();
            <label for="">contraseña</label>
            <input type="text" class="form-control" value="<?php echo $f['pass']; ?>" name="pass" id="" aria-describedby="helpId" placeholder="">
          </div>
+         <input type="text" value="<?php echo $f['tecnico'] ?>" name="user1" hidden>
+         <input type="text" value="<?php echo $f['pass']; ?>" name="pass1" hidden>
 </form>
          <form id="eliminar" action="eliminar.php" method="post">
      <div class="form-group">

@@ -38,7 +38,7 @@ $folio = $_POST['folio'];
 
 if($folio < ($x['folio']+1) && $folio > 0){
 
-$query = "SELECT folio, estado, fecha, detalles, asunto, usuario, departamento, tecnico, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folio";
+$query = "SELECT folio, estado, fecha, causa, fechaa, detalles, asunto, usuario, departamento, tecnico, tecnicoa, e1, e2, e3, e4 FROM reportes WHERE folio LIKE $folio";
 $statement = $db->prepare($query);
 $statement->execute();
 $reporte = $statement->fetch();
@@ -159,12 +159,15 @@ else{
            <input type="text"
              class="form-control" name="folio" value= "<?php echo $reporte['folio']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled>
              <br>
-             <label for="" text-align:center;>FECHA</label>
-             <input type="text"
-             class="form-control" name="folio" value= "<?php echo $reporte['fecha']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled> 
+             <label for="" text-align:center;>FECHA EN QUE SE LEVANTO EL REPORTE</label>
+             <input type="text" class="form-control" name="folio" value= "<?php echo $reporte['fecha']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled> 
+             <label for="" text-align:center;>FECHA EN QUE SE ATENDIO EL REPORTE</label>
+             <input type="text" class="form-control" name="folio" value= "<?php echo $reporte['fechaa']; ?>" id="" aria-describedby="helpId" placeholder="FOLIO" style="text-align:center; width: 100%;" disabled> 
          </div>
          </div>
-             <br>
+         <label for="" text-align:center;>CAUSA DEL REPORTE</label>
+             <input type="text" class="form-control" name="folio" value= "<?php echo $reporte['causa']; ?>" id="" aria-describedby="helpId" placeholder="CAUSA" style="text-align:center; width: 100%;" disabled>
+
             <label>ETIQUETAS</label>
              <div class="row">
              <div class="col-md">
@@ -181,7 +184,7 @@ else{
              <form action="generarpdf.php" method="post">
              <br>
           <input type="text" value="<?php echo $reporte['folio']; ?>" name="folio" hidden>
-          <button type="submit" class="btn btn-secondary" style="width: 600px; height: 120px;">PDF</button>
+          <button type="submit" class="btn btn-secondary" style="width: 600px; height: 87px;">PDF</button>
           </form>
              </div>
              <br>
@@ -205,9 +208,11 @@ else{
            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['departamento']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
               
               <br>
-            <!--Encargados Desplegable -->
-            <label>TECNICO</label>
-            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="QUIEN REPORTA " style="text-align:center" disabled>
+            
+              <label>TECNICO QUE LEVANTÓ EL REPORTE</label>
+            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnico']; ?>" aria-describedby="helpId" placeholder="LEVANTO REPORTE" style="text-align:center" disabled>
+            <label>TECNICO QUE ATENDIÓ EL REPORTE</label>
+            <input type="text" class="form-control" name="usuario" id="" value= "<?php echo $reporte['tecnicoa']; ?>" aria-describedby="helpId" placeholder="TECNICO QUE ATENDIO" style="text-align:center" disabled>
 
             <div class="form-group">
             <label for="">DETALLES</label>
